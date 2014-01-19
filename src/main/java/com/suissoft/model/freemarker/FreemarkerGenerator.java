@@ -16,7 +16,7 @@ public class FreemarkerGenerator {
 
 		// Process the template using FreeMarker
 		try {
-			freemarkerDo(datamodel, "resources/suissoft.ftl");
+			freemarkerDo(datamodel, "src/main/resources/suissoft.ftl");
 		}
 		catch(Exception e) {
 			System.out.println(e.getLocalizedMessage());
