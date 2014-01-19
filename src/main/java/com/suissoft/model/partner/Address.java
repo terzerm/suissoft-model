@@ -1,17 +1,27 @@
 package com.suissoft.model.partner;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="T_ADDRESS")
 public class Address {
 	private long id;
 	private Partner owner;
 	private String addressLine1;
 	private String addressLine2;
 	private String addressLine3;
+	
+	@Id
 	public long getId() {
 		return id;
 	}
 	public void setId(long id) {
 		this.id = id;
 	}
+	@ManyToOne
 	public Partner getOwner() {
 		return owner;
 	}
@@ -36,6 +46,5 @@ public class Address {
 	public void setAddressLine3(String addressLine3) {
 		this.addressLine3 = addressLine3;
 	}
-	
 	
 }

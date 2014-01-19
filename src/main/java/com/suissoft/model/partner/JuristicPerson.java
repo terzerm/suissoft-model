@@ -1,8 +1,14 @@
 package com.suissoft.model.partner;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
 /**
  * Juristic person entity containing the objects that make up the data of a juristic person.
  */
+@Entity
+@Table(name="T_JURISTIC_PERSON")
 public class JuristicPerson extends Partner {
 	private String name;
 
@@ -10,6 +16,7 @@ public class JuristicPerson extends Partner {
 	 * Returns the juristic person's name
 	 * @return the name of this juristic person
 	 */
+	@Column(length = 64, nullable = false)
 	public String getName() {
 		return name;
 	}
