@@ -3,7 +3,9 @@ package com.suissoft.model.partner;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
@@ -31,13 +33,18 @@ abstract public class Partner extends AbstractEntity {
 		this.id = id;
 	}
 
-	@OneToMany
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="owner", orphanRemoval=true)
 	public List<Address> getAddresses() {
 		return addresses;
 	}
 	
 	public void setAddresses(List<Address> addresses) {
 		this.addresses = addresses;
+	}
+	
+	public void addAddress(Address address) {
+		address.setOwner(this);
+		addresses.add(address);
 	}
 	
 }

@@ -1,5 +1,6 @@
 package com.suissoft.model.partner;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -25,6 +26,7 @@ import com.suissoft.model.dao.EntityManagerDao;
 public class NaturalPersonDaoTest {
 	
 	private Dao<NaturalPerson> dao;
+	private Dao<Address> daoAddress;
 	private List<Long> toDelete;
 
 	@Before
@@ -33,6 +35,7 @@ public class NaturalPersonDaoTest {
 		final EntityManager entityManager = Persistence.createEntityManagerFactory("persistenceUnit").createEntityManager();
 		assertNotNull("should get entityManager", entityManager);
 		dao = new EntityManagerDao<>(NaturalPerson.class, entityManager);
+		daoAddress = new EntityManagerDao<>(Address.class, entityManager);
 	}
 	
 	@After
@@ -57,6 +60,15 @@ public class NaturalPersonDaoTest {
 		person.setBirthday(birthday);
 		dao.insertOrUpdate(person);
 		return person;
+	}
+	
+	private Address createAddress(String... lines) {
+		if (lines.length > 3) throw new IndexOutOfBoundsException("at max 3 address lines are allowed, but found: " + lines.length);
+		final Address addr = new Address();
+		if (lines.length > 0) addr.setAddressLine1(lines[0]);
+		if (lines.length > 1) addr.setAddressLine2(lines[1]);
+		if (lines.length > 2) addr.setAddressLine3(lines[2]);
+		return addr;
 	}
 
 	@Test
@@ -107,5 +119,25 @@ public class NaturalPersonDaoTest {
 		assertNotNull("should find again by ID", dao.findById(p.getId()));
 		dao.delete(p);
 		assertNull("should no longer find after delete", dao.findById(p.getId()));
+	}
+	
+	@Test
+	public void shouldInsertWithAddress() {
+		final NaturalPerson p = insert("Peer", "Woodbridge");
+		p.addAddress(createAddress("Emmastrasse 14", "3000 Bern"));
+		p.addAddress(createAddress("Workaholic square", "8005 Zurich"));
+		dao.insertOrUpdate(p);
+		assertNotEquals("generated ID should be different from 0", 0, p.getAddresses().get(0).getId());
+		assertNotEquals("generated ID should be different from 0", 0, p.getAddresses().get(1).getId());
+		assertNotEquals("generated ID's should be different", p.getAddresses().get(0).getId(), p.getAddresses().get(1).getId());
+		assertNotNull("should have owner", p.getAddresses().get(0).getOwner());
+		assertNotNull("should have owner", p.getAddresses().get(1).getOwner());
+		assertNotNull("should find by ID", daoAddress.findById(p.getAddresses().get(0).getId()));
+		assertNotNull("should find by ID", daoAddress.findById(p.getAddresses().get(1).getId()));
+
+		p.getAddresses().get(0).setAddressLine3("Switzerland");
+		dao.insertOrUpdate(p);
+		assertNotNull("should find by ID", daoAddress.findById(p.getAddresses().get(0).getId()));
+		assertEquals("should have been updated", "Switzerland", daoAddress.findById(p.getAddresses().get(0).getId()).getAddressLine3());
 	}
 }

@@ -2,15 +2,13 @@ package com.suissoft.model.dao;
 
 import java.util.List;
 
-import com.suissoft.model.AbstractEntity;
-
 /**
  * Data access object (DAO) for an entity.
  * 
  * @param <E>
  *            the entity type served by this DAO
  */
-public interface Dao<E extends AbstractEntity> {
+public interface Dao<E> {
 
 	/**
 	 * Returns the pojo class that represents the entity served by this DAO
@@ -38,7 +36,7 @@ public interface Dao<E extends AbstractEntity> {
 
 	/**
 	 * Creates a new entity with no data, for instance for later insertion
-	 * through {@link #insertOrUpdate(AbstractEntity) insertOrUpdate(..)}. No
+	 * through {@link #insertOrUpdate(Object) insertOrUpdate(..)}. No
 	 * persistence operation is performed by this operation.
 	 * 
 	 * @return a new empty entity
@@ -50,7 +48,8 @@ public interface Dao<E extends AbstractEntity> {
 	 * 
 	 * @param entity
 	 *            the entity with the new data
-	 * @return the inserted or updated entity, may be the same instance as {@code entity} 
+	 * @return the inserted or updated entity, may be the same instance as
+	 *         {@code entity}
 	 */
 	E insertOrUpdate(E entity);
 
@@ -65,11 +64,13 @@ public interface Dao<E extends AbstractEntity> {
 
 	/**
 	 * Deletes the specified entity, throwing an exception if the specified
-	 * entity does not exist or is a detached entity (e.g. because it was cloned).
+	 * entity does not exist or is a detached entity (e.g. because it was
+	 * cloned).
 	 * 
 	 * @param entity
 	 *            the entity to delete
-	 * @throws IllegalArgumentException if the specified entity does not exist or is detached
+	 * @throws IllegalArgumentException
+	 *             if the specified entity does not exist or is detached
 	 */
 	void delete(E entity);
 }

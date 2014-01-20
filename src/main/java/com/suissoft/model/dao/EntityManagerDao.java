@@ -10,9 +10,7 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 
-import com.suissoft.model.AbstractEntity;
-
-public class EntityManagerDao<E extends AbstractEntity> extends AbstractDao<E> implements Dao<E> {
+public class EntityManagerDao<E> extends AbstractDao<E> implements Dao<E> {
 	
 	private EntityManager entityManager;
 	private CriteriaQuery<E> selectAll;

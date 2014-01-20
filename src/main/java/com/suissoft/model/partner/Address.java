@@ -1,7 +1,11 @@
 package com.suissoft.model.partner;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -15,13 +19,15 @@ public class Address {
 	private String addressLine3;
 	
 	@Id
+	@GeneratedValue
 	public long getId() {
 		return id;
 	}
 	public void setId(long id) {
 		this.id = id;
 	}
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.PERSIST, fetch=FetchType.LAZY, optional=false)
+	@JoinColumn(nullable=false, updatable=false, insertable=true)
 	public Partner getOwner() {
 		return owner;
 	}
