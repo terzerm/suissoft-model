@@ -3,43 +3,16 @@ package com.suissoft.model.partner;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.persistence.EntityManager;
-import javax.persistence.Persistence;
-
 import org.joda.time.LocalDate;
-import org.junit.Before;
 import org.junit.Test;
+
+import com.suissoft.model.AbstractPersistenceUnitTest;
 
 /**
  * Unit test for {@link Partner}
  */
-public class PartnerTest {
+public class PartnerTest extends AbstractPersistenceUnitTest {
 	
-	private EntityManager entityManager;
-	private List<Object> entitiesToDelete;
-
-	@Before
-	public void beforeEach() {
-		entitiesToDelete = new ArrayList<>();
-		entityManager = Persistence.createEntityManagerFactory("persistenceUnit").createEntityManager();
-		assertNotNull("should get entityManager", entityManager);
-	}
-	
-	public void afterEach() {
-		entityManager.getTransaction().begin();
-		for (final Object toDelete : entitiesToDelete) {
-			try {
-				entityManager.remove(toDelete);
-			} catch (Exception e) {
-				//ignore and continue
-			}
-		}
-		entityManager.getTransaction().commit();
-	}
-
 	private NaturalPerson insertNaturalPerson(String firstName, String lastName, LocalDate birthday) {
 		final NaturalPerson p = new NaturalPerson();
 		p.setFirstName(firstName);

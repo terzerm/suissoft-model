@@ -31,7 +31,10 @@ public class HibernateConfigTest {
 
 	@Test
 	public void shouldGetEntityManager() {
-		final EntityManager entityManager = Persistence.createEntityManagerFactory("persistenceUnit").createEntityManager();
-		assertNotNull("should get entityManager", entityManager);
+		for (final PersistenceUnit persistenceUnit : PersistenceUnit.values()) {
+			final EntityManager entityManager = Persistence.createEntityManagerFactory(persistenceUnit.name()).createEntityManager();
+			assertNotNull("should get entityManager", entityManager);
+			entityManager.close();
+		}
 	}
 }

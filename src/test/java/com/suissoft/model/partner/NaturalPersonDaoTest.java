@@ -17,6 +17,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.suissoft.model.PersistenceUnit;
 import com.suissoft.model.dao.Dao;
 import com.suissoft.model.dao.EntityManagerDao;
 
@@ -25,6 +26,7 @@ import com.suissoft.model.dao.EntityManagerDao;
  */
 public class NaturalPersonDaoTest {
 	
+	private EntityManager entityManager;
 	private Dao<NaturalPerson> dao;
 	private Dao<Address> daoAddress;
 	private List<Long> toDelete;
@@ -32,7 +34,7 @@ public class NaturalPersonDaoTest {
 	@Before
 	public void beforeEach() {
 		toDelete = new ArrayList<>();
-		final EntityManager entityManager = Persistence.createEntityManagerFactory("persistenceUnit").createEntityManager();
+		entityManager = Persistence.createEntityManagerFactory(PersistenceUnit.H2_FILE.name()).createEntityManager();
 		assertNotNull("should get entityManager", entityManager);
 		dao = new EntityManagerDao<>(NaturalPerson.class, entityManager);
 		daoAddress = new EntityManagerDao<>(Address.class, entityManager);
@@ -43,6 +45,8 @@ public class NaturalPersonDaoTest {
 		for (final long idToDelete : toDelete) {
 			dao.delete(idToDelete);
 		}
+		entityManager.clear();
+		entityManager.close();
 	}
 
 	private NaturalPerson insert(String firstName, String lastName) {
@@ -59,6 +63,7 @@ public class NaturalPersonDaoTest {
 		person.setLastName(lastName);
 		person.setBirthday(birthday);
 		dao.insertOrUpdate(person);
+		toDelete.add(person.getId());
 		return person;
 	}
 	
