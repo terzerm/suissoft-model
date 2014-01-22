@@ -15,6 +15,8 @@ import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameter;
 import org.junit.runners.Parameterized.Parameters;
 
+import com.suissoft.persistence.PersistenceUnit;
+
 
 /**
  * Base class for parameterized tests looping over all {@link PersistenceUnit} entries.

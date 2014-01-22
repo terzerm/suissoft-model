@@ -12,6 +12,8 @@ import javax.persistence.Persistence;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import com.suissoft.persistence.PersistenceUnit;
+
 /**
  * Unit test verifying the hibernate config.
  */
