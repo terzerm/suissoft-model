@@ -6,20 +6,20 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.metamodel.EntityType;
 
-import com.google.common.reflect.TypeParameter;
-import com.google.common.reflect.TypeToken;
 import com.google.inject.AbstractModule;
 import com.google.inject.TypeLiteral;
+import com.google.inject.util.Types;
 import com.suissoft.model.dao.Dao;
 import com.suissoft.model.dao.EntityManagerDao;
+import com.suissoft.persistence.unit.Persistence;
 
 class DaoModule extends AbstractModule {
 	
-	private final PersistenceUnit peristenceUnit;
+	private final Persistence.Unit peristenceUnit;
 	private final EntityManager entityManager;
 
 	@Inject
-	public DaoModule(PersistenceUnit peristenceUnit, EntityManager entityManager) {
+	public DaoModule(Persistence.Unit peristenceUnit, EntityManager entityManager) {
 		this.peristenceUnit = peristenceUnit;
 		this.entityManager = entityManager; 
 	}
@@ -33,12 +33,13 @@ class DaoModule extends AbstractModule {
 	
 	private <T> void bindDaoFor(Class<T> entityClass) {
 		final Dao<T> dao = new EntityManagerDao<>(entityClass, entityManager);
-		bind(getDaoTypeLiteralFor(entityClass)).annotatedWith(peristenceUnit.getAnnotation()).toInstance(dao);
+		bind(getDaoTypeLiteralFor(entityClass)).annotatedWith(peristenceUnit.asAnnotation()).toInstance(dao);
+	
 	}
 	
-	@SuppressWarnings({ "serial", "unchecked" })
+	@SuppressWarnings("unchecked")
 	private static <T> TypeLiteral<Dao<T>> getDaoTypeLiteralFor(Class<T> entityClass) {
-		final Type type = new TypeToken<Dao<T>>(){}.where(new TypeParameter<T>(){}, entityClass).getType();
+		final Type type = Types.newParameterizedType(Dao.class, entityClass); 
 		return (TypeLiteral<Dao<T>>) TypeLiteral.get(type);
 	}
 	

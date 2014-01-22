@@ -6,10 +6,12 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 
+@PersistenceContext
 public class EntityManagerDao<E> extends AbstractDao<E> implements Dao<E> {
 	
 	private EntityManager entityManager;

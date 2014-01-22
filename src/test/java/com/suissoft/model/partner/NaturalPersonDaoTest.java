@@ -1,5 +1,6 @@
 package com.suissoft.model.partner;
 
+import static com.suissoft.persistence.unit.Persistence.Unit.H2_FILE;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
@@ -19,7 +20,7 @@ import org.junit.Test;
 import com.google.inject.Guice;
 import com.suissoft.model.dao.Dao;
 import com.suissoft.persistence.PersistenceModule;
-import com.suissoft.persistence.PersistenceUnit;
+import com.suissoft.persistence.unit.Persistence;
 
 /**
  * Unit test for {@link Dao} for {@link NaturalPerson}
@@ -27,11 +28,11 @@ import com.suissoft.persistence.PersistenceUnit;
 public class NaturalPersonDaoTest {
 	
 	@Inject
-	@PersistenceUnit.H2_File
+	@Persistence(H2_FILE)
 	private Dao<NaturalPerson> daoNaturalPerson;
 
 	@Inject
-	@PersistenceUnit.H2_File
+	@Persistence(H2_FILE)
 	private Dao<Address> daoAddress;
 
 	private List<Long> toDelete;

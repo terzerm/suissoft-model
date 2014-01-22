@@ -7,12 +7,11 @@ import java.lang.management.ManagementFactory;
 import java.lang.management.RuntimeMXBean;
 
 import javax.persistence.EntityManager;
-import javax.persistence.Persistence;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.suissoft.persistence.PersistenceUnit;
+import com.suissoft.persistence.unit.Persistence;
 
 /**
  * Unit test verifying the hibernate config.
@@ -33,8 +32,8 @@ public class HibernateConfigTest {
 
 	@Test
 	public void shouldGetEntityManager() {
-		for (final PersistenceUnit persistenceUnit : PersistenceUnit.values()) {
-			final EntityManager entityManager = Persistence.createEntityManagerFactory(persistenceUnit.name()).createEntityManager();
+		for (final Persistence.Unit persistenceUnit : Persistence.Unit.values()) {
+			final EntityManager entityManager = javax.persistence.Persistence.createEntityManagerFactory(persistenceUnit.name()).createEntityManager();
 			assertNotNull("should get entityManager", entityManager);
 			entityManager.close();
 		}
