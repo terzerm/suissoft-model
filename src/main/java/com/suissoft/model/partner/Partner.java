@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderColumn;
 import javax.persistence.Table;
 
 import com.suissoft.model.AbstractEntity;
@@ -23,6 +24,7 @@ abstract public class Partner extends AbstractEntity {
 
 	private List<Address> addresses = new ArrayList<>();
 	
+	@Override
 	@Id
 	@GeneratedValue
 	public long getId() {
@@ -34,6 +36,7 @@ abstract public class Partner extends AbstractEntity {
 	}
 
 	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="owner", orphanRemoval=true)
+	@OrderColumn
 	public List<Address> getAddresses() {
 		return addresses;
 	}

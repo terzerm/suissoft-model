@@ -1,6 +1,5 @@
 package com.suissoft.model.partner;
 
-import static com.suissoft.persistence.unit.Persistence.Unit.H2_FILE;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
@@ -21,6 +20,7 @@ import com.google.inject.Guice;
 import com.suissoft.model.dao.Dao;
 import com.suissoft.persistence.PersistenceModule;
 import com.suissoft.persistence.unit.Persistence;
+import com.suissoft.persistence.unit.Persistence.Unit;
 
 /**
  * Unit test for {@link Dao} for {@link NaturalPerson}
@@ -28,11 +28,11 @@ import com.suissoft.persistence.unit.Persistence;
 public class NaturalPersonDaoTest {
 	
 	@Inject
-	@Persistence(H2_FILE)
+	@Persistence(Unit.H2_MEMORY)
 	private Dao<NaturalPerson> daoNaturalPerson;
 
 	@Inject
-	@Persistence(H2_FILE)
+	@Persistence(Unit.H2_MEMORY)
 	private Dao<Address> daoAddress;
 
 	private List<Long> toDelete;
@@ -65,7 +65,7 @@ public class NaturalPersonDaoTest {
 		person.setFirstName(firstName);
 		person.setLastName(lastName);
 		person.setBirthday(birthday);
-		daoNaturalPerson.insertOrUpdate(person);
+		person = daoNaturalPerson.insertOrUpdate(person);
 		toDelete.add(person.getId());
 		return person;
 	}
@@ -116,14 +116,14 @@ public class NaturalPersonDaoTest {
 	}
 	@Test
 	public void shouldDelete() {
-		final NaturalPerson p = insert("Peer", "Woodbridge");
+		NaturalPerson p = insert("Peer", "Woodbridge");
 		assertNotEquals("generated ID should be different from 0", 0, p.getId());
 		assertNotNull("should find by ID", daoNaturalPerson.findById(p.getId()));
 		assertTrue("should delete by ID", daoNaturalPerson.delete(p.getId()));
 		assertNull("should no longer find by ID", daoNaturalPerson.findById(p.getId()));
 		p.setId(0);
 		p.setAddresses(new ArrayList<Address>());
-		daoNaturalPerson.insertOrUpdate(p);
+		p = daoNaturalPerson.insertOrUpdate(p);
 		assertNotNull("should find again by ID", daoNaturalPerson.findById(p.getId()));
 		daoNaturalPerson.delete(p);
 		assertNull("should no longer find after delete", daoNaturalPerson.findById(p.getId()));
@@ -131,10 +131,10 @@ public class NaturalPersonDaoTest {
 	
 	@Test
 	public void shouldInsertWithAddress() {
-		final NaturalPerson p = insert("Peer", "Woodbridge");
+		NaturalPerson p = insert("Peer", "Woodbridge");
 		p.addAddress(createAddress("Emmastrasse 14", "3000 Bern"));
 		p.addAddress(createAddress("Workaholic square", "8005 Zurich"));
-		daoNaturalPerson.insertOrUpdate(p);
+		p = daoNaturalPerson.insertOrUpdate(p);
 		assertNotEquals("generated ID should be different from 0", 0, p.getAddresses().get(0).getId());
 		assertNotEquals("generated ID should be different from 0", 0, p.getAddresses().get(1).getId());
 		assertNotEquals("generated ID's should be different", p.getAddresses().get(0).getId(), p.getAddresses().get(1).getId());
@@ -144,7 +144,7 @@ public class NaturalPersonDaoTest {
 		assertNotNull("should find by ID", daoAddress.findById(p.getAddresses().get(1).getId()));
 
 		p.getAddresses().get(0).setAddressLine3("Switzerland");
-		daoNaturalPerson.insertOrUpdate(p);
+		p = daoNaturalPerson.insertOrUpdate(p);
 		assertNotNull("should find by ID", daoAddress.findById(p.getAddresses().get(0).getId()));
 		assertEquals("should have been updated", "Switzerland", daoAddress.findById(p.getAddresses().get(0).getId()).getAddressLine3());
 	}

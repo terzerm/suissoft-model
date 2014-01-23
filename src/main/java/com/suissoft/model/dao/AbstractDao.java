@@ -2,7 +2,9 @@ package com.suissoft.model.dao;
 
 import static java.util.Objects.requireNonNull;
 
-abstract public class AbstractDao<E> implements Dao<E> {
+import com.suissoft.model.Entity;
+
+abstract public class AbstractDao<E extends Entity> implements Dao<E> {
 	
 	private Class<E> entityClass;
 
@@ -24,15 +26,10 @@ abstract public class AbstractDao<E> implements Dao<E> {
 			throw new RuntimeException("create for " + entityClass.getName() + " failed, e=" + e, e);
 		}
 	}
-
+	
 	@Override
-	public boolean delete(long id) {
-		final E entity = findById(id);
-		if (entity != null) {
-			delete(entity);
-			return true;
-		}
-		return false;
+	public void delete(E entity) {
+		delete(entity.getId());
 	}
 
 }

@@ -9,7 +9,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
  * Base class for entities providing a reflection-based implementation for
  * {@link #hashCode()}, {@link #equals(Object)} and {@link #toString()}.
  */
-public class AbstractEntity {
+abstract public class AbstractEntity implements Entity {
 	@Override
 	public int hashCode() {
 		return HashCodeBuilder.reflectionHashCode(this, false);

@@ -2,13 +2,15 @@ package com.suissoft.model.dao;
 
 import java.util.List;
 
+import com.suissoft.model.Entity;
+
 /**
  * Data access object (DAO) for an entity.
  * 
  * @param <E>
  *            the entity type served by this DAO
  */
-public interface Dao<E> {
+public interface Dao<E extends Entity> {
 
 	/**
 	 * Returns the pojo class that represents the entity served by this DAO
@@ -36,7 +38,7 @@ public interface Dao<E> {
 
 	/**
 	 * Creates a new entity with no data, for instance for later insertion
-	 * through {@link #insertOrUpdate(Object) insertOrUpdate(..)}. No
+	 * through {@link #insertOrUpdate(Entity) insertOrUpdate(..)}. No
 	 * persistence operation is performed by this operation.
 	 * 
 	 * @return a new empty entity

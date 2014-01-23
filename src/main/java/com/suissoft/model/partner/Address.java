@@ -9,15 +9,18 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.suissoft.model.AbstractEntity;
+
 @Entity
 @Table(name="T_ADDRESS")
-public class Address {
+public class Address extends AbstractEntity {
 	private long id;
 	private Partner owner;
 	private String addressLine1;
 	private String addressLine2;
 	private String addressLine3;
 	
+	@Override
 	@Id
 	@GeneratedValue
 	public long getId() {

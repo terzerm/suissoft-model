@@ -45,7 +45,7 @@ public class PersistenceModule extends AbstractModule {
 			.annotatedWith(persistenceUnit.asAnnotation())
 			.toInstance(manager);
 			
-			install(new DaoModule(persistenceUnit, manager));
+			install(new DaoModule(persistenceUnit, factory));
 		}
 		bind(new TypeLiteral<Map<Persistence.Unit, EntityManagerFactory>>(){}).toInstance(factories);
 		bind(new TypeLiteral<Map<Persistence.Unit, EntityManager>>(){}).toInstance(managers);
