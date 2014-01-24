@@ -35,4 +35,9 @@ public class NaturalPerson extends Partner {
 		this.birthday = birthday;
 	}
 	
+	@Override
+	public <I, R> R accept(PartnerVisitor<I, R> visitor, I input) {
+		return visitor.visitNaturalPerson(this, input);
+	}
+	
 }

@@ -3,8 +3,6 @@ package com.suissoft.model.partner;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -14,21 +12,11 @@ import com.suissoft.model.AbstractEntity;
 @Entity
 @Table(name="T_ADDRESS")
 public class Address extends AbstractEntity {
-	private long id;
 	private Partner owner;
 	private String addressLine1;
 	private String addressLine2;
 	private String addressLine3;
 	
-	@Override
-	@Id
-	@GeneratedValue
-	public long getId() {
-		return id;
-	}
-	public void setId(long id) {
-		this.id = id;
-	}
 	@ManyToOne(cascade=CascadeType.PERSIST, fetch=FetchType.LAZY, optional=false)
 	@JoinColumn(nullable=false, updatable=false, insertable=true)
 	public Partner getOwner() {

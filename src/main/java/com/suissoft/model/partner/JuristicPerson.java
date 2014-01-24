@@ -28,4 +28,8 @@ public class JuristicPerson extends Partner {
 		this.name = name;
 	}
 	
+	@Override
+	public <I, R> R accept(PartnerVisitor<I, R> visitor, I input) {
+		return visitor.visitJuristicPerson(this, input);
+	}
 }

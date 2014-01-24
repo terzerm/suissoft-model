@@ -37,13 +37,21 @@ public class PersistenceModule extends AbstractModule {
 			factories.put(persistenceUnit, factory);
 			managers.put(persistenceUnit, manager);
 			
-			bind(EntityManagerFactory.class)
-			.annotatedWith(persistenceUnit.asAnnotation())
-			.toInstance(factory);
-
-			bind(EntityManager.class)
-			.annotatedWith(persistenceUnit.asAnnotation())
-			.toInstance(manager);
+			if (persistenceUnits.length > 1) {
+				bind(EntityManagerFactory.class)
+				.annotatedWith(persistenceUnit.asAnnotation())
+				.toInstance(factory);
+	
+				bind(EntityManager.class)
+				.annotatedWith(persistenceUnit.asAnnotation())
+				.toInstance(manager);
+			} else {
+				bind(EntityManagerFactory.class)
+				.toInstance(factory);
+	
+				bind(EntityManager.class)
+				.toInstance(manager);
+			}
 			
 			install(new DaoModule(persistenceUnit, factory));
 		}
