@@ -7,7 +7,7 @@ public interface Entity {
 	/**
 	 * The ID or primary key of this entity.
 	 * 
-	 * @return the primary key
+	 * @return the ID or primary key
 	 */
 	long getId();
 }

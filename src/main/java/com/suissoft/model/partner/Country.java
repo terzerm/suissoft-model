@@ -2,6 +2,8 @@ package com.suissoft.model.partner;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 import com.suissoft.model.AbstractEntity;
@@ -13,6 +15,13 @@ public class Country extends AbstractEntity {
 	private String abbreviation;
 	private String name;
 	
+	@Id
+	@GeneratedValue
+	@Override
+	public long getId() {
+		return super.getId();
+	}
+
 	/**
 	 * Returns the country ISO code (alpha-2), such as "CH" for Switzerland
 	 */

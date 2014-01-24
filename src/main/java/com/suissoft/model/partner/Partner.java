@@ -6,6 +6,8 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.OneToMany;
@@ -21,6 +23,13 @@ abstract public class Partner extends AbstractEntity {
 
 	private List<Address> addresses = new ArrayList<>();
 	
+	@Id
+	@GeneratedValue
+	@Override
+	public long getId() {
+		return super.getId();
+	}
+
 	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="owner", orphanRemoval=true)
 	@OrderColumn
 	public List<Address> getAddresses() {
