@@ -11,6 +11,7 @@
 
 		<class>com.suissoft.model.partner.Partner</class>
 		<class>com.suissoft.model.partner.Address</class>
+		<class>com.suissoft.model.partner.Country</class>
 		<class>com.suissoft.model.partner.NaturalPerson</class>
 		<class>com.suissoft.model.partner.JuristicPerson</class>
 
@@ -35,6 +36,7 @@
 
 		<class>com.suissoft.model.partner.Partner</class>
 		<class>com.suissoft.model.partner.Address</class>
+		<class>com.suissoft.model.partner.Country</class>
 		<class>com.suissoft.model.partner.NaturalPerson</class>
 		<class>com.suissoft.model.partner.JuristicPerson</class>
 
