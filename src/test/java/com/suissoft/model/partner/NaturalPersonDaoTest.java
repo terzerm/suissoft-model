@@ -59,7 +59,7 @@ public class NaturalPersonDaoTest {
 		return insert(firstName, lastName, birthday, new NaturalPerson());
 	}
 	private NaturalPerson insertCreateByDao(String firstName, String lastName, LocalDate birthday) {
-		return insert(firstName, lastName, birthday, daoNaturalPerson.create());
+		return insert(firstName, lastName, birthday, daoNaturalPerson.newEntity());
 	}
 	private NaturalPerson insert(String firstName, String lastName, LocalDate birthday, NaturalPerson person) {
 		person.setFirstName(firstName);

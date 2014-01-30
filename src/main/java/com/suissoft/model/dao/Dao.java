@@ -43,7 +43,7 @@ public interface Dao<E extends Entity> {
 	 * 
 	 * @return a new empty entity
 	 */
-	E create();
+	E newEntity();
 
 	/**
 	 * Inserts or updates the given entity

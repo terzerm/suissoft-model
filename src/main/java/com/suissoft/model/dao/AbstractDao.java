@@ -19,11 +19,11 @@ abstract public class AbstractDao<E extends Entity> implements Dao<E> {
 	}
 
 	@Override
-	public E create() {
+	public E newEntity() {
 		try {
 			return entityClass.newInstance();
 		} catch (InstantiationException | IllegalAccessException e) {
-			throw new RuntimeException("create for " + entityClass.getName() + " failed, e=" + e, e);
+			throw new RuntimeException("newEntity for " + entityClass.getName() + " failed, e=" + e, e);
 		}
 	}
 	
