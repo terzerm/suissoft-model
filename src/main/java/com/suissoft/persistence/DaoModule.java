@@ -5,7 +5,6 @@ import java.lang.reflect.Type;
 import javax.inject.Inject;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceException;
-import javax.persistence.PersistenceUnit;
 import javax.persistence.metamodel.EntityType;
 
 import com.google.inject.AbstractModule;
@@ -14,17 +13,14 @@ import com.google.inject.util.Types;
 import com.suissoft.model.Entity;
 import com.suissoft.model.dao.Dao;
 import com.suissoft.model.dao.EntityManagerDao;
-import com.suissoft.persistence.unit.Persistence;
 
-@PersistenceUnit
+@javax.persistence.PersistenceUnit
 class DaoModule extends AbstractModule {
 	
-	private final Persistence.Unit peristenceUnit;
 	private final EntityManagerFactory entityManagerFactory;
 
 	@Inject
-	public DaoModule(Persistence.Unit peristenceUnit, EntityManagerFactory entityManagerFactory) {
-		this.peristenceUnit = peristenceUnit;
+	public DaoModule(EntityManagerFactory entityManagerFactory) {
 		this.entityManagerFactory = entityManagerFactory; 
 	}
 
@@ -42,7 +38,7 @@ class DaoModule extends AbstractModule {
 	
 	private <E extends Entity> void bindDaoFor(Class<E> entityClass) {
 		final Dao<E> dao = new EntityManagerDao<>(entityClass, entityManagerFactory);
-		bind(getDaoTypeLiteralFor(entityClass)).annotatedWith(peristenceUnit.asAnnotation()).toInstance(dao);
+		bind(getDaoTypeLiteralFor(entityClass)).toInstance(dao);
 	
 	}
 	

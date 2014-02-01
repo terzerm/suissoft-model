@@ -14,17 +14,17 @@ import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameter;
 import org.junit.runners.Parameterized.Parameters;
 
-import com.suissoft.persistence.unit.Persistence;
+import com.suissoft.persistence.PersistenceUnit;
 
 
 /**
- * Base class for parameterized tests looping over all {@link Persistence} entries.
+ * Base class for parameterized tests looping over all {@link PersistenceUnit} entries.
  */
 @RunWith(Parameterized.class)
 abstract public class AbstractPersistenceUnitTest {
 	
 	@Parameter
-	public Persistence.Unit peristenceUnit;
+	public PersistenceUnit peristenceUnit;
 	
 	protected EntityManager entityManager;
 	protected List<Object> entitiesToDelete;
@@ -32,7 +32,7 @@ abstract public class AbstractPersistenceUnitTest {
 	@Parameters
 	public static List<Object[]> getParameters() {
 		final List<Object[]> params = new ArrayList<>();
-		for (final Persistence.Unit persistenceUnit : Persistence.Unit.values()) {
+		for (final PersistenceUnit persistenceUnit : PersistenceUnit.values()) {
 			params.add(new Object[]{persistenceUnit});
 		}
 		return params;

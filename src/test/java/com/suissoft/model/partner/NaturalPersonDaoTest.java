@@ -19,20 +19,19 @@ import org.junit.Test;
 import com.google.inject.Guice;
 import com.suissoft.model.dao.Dao;
 import com.suissoft.persistence.PersistenceModule;
-import com.suissoft.persistence.unit.Persistence;
-import com.suissoft.persistence.unit.Persistence.Unit;
+import com.suissoft.persistence.PersistenceUnit;
 
 /**
  * Unit test for {@link Dao} for {@link NaturalPerson}
  */
 public class NaturalPersonDaoTest {
 	
+	private final PersistenceUnit unit = PersistenceUnit.H2_FILE;
+	
 	@Inject
-	@Persistence(Unit.H2_MEMORY)
 	private Dao<NaturalPerson> daoNaturalPerson;
 
 	@Inject
-	@Persistence(Unit.H2_MEMORY)
 	private Dao<Address> daoAddress;
 
 	private List<Long> toDelete;
@@ -40,7 +39,7 @@ public class NaturalPersonDaoTest {
 	@Before
 	public void beforeEach() {
 		toDelete = new ArrayList<>();
-		Guice.createInjector(new PersistenceModule()).injectMembers(this);
+		Guice.createInjector(new PersistenceModule(unit)).injectMembers(this);
 		assertNotNull("daoNaturalPerson should have been injected", daoNaturalPerson);
 		assertNotNull("daoAddress should have been injected", daoAddress);
 	}

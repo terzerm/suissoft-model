@@ -1,62 +1,34 @@
 package com.suissoft.persistence;
 
-import java.util.EnumMap;
-import java.util.Map;
+import java.util.Objects;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
 import com.google.inject.AbstractModule;
-import com.google.inject.TypeLiteral;
-import com.suissoft.persistence.unit.Persistence;
 
 /**
  * Guice injection module. Binds {@link EntityManagerFactory} and {@link EntityManager}
  * to concrete instances. The factories and managers to be injected must be annotated
- * with the appropriate annotation defined in {@link Persistence}. 
+ * with the appropriate annotation defined in {@link PersistenceUnit}. 
  */
+@javax.persistence.PersistenceUnit
 public class PersistenceModule extends AbstractModule {
 	
-	private final Persistence.Unit[] persistenceUnits;
+	private final PersistenceUnit persistenceUnit;
 	
-	public PersistenceModule() {
-		this(Persistence.Unit.values());
-	}
-	public PersistenceModule(Persistence.Unit... persistenceUnits) {
-		this.persistenceUnits = persistenceUnits;
+	public PersistenceModule(PersistenceUnit persistenceUnit) {
+		Objects.requireNonNull(persistenceUnit, "persistenceUnit cannot be null");
+		this.persistenceUnit = persistenceUnit;
 	}
 
 	@Override
 	protected void configure() {
-		final Map<Persistence.Unit, EntityManagerFactory> factories = new EnumMap<>(Persistence.Unit.class);
-		final Map<Persistence.Unit, EntityManager> managers = new EnumMap<>(Persistence.Unit.class);
-		for (final Persistence.Unit persistenceUnit : persistenceUnits) {
-			final EntityManagerFactory factory = javax.persistence.Persistence.createEntityManagerFactory(persistenceUnit.name());
-			final EntityManager manager = factory.createEntityManager();
-			
-			factories.put(persistenceUnit, factory);
-			managers.put(persistenceUnit, manager);
-			
-			if (persistenceUnits.length > 1) {
-				bind(EntityManagerFactory.class)
-				.annotatedWith(persistenceUnit.asAnnotation())
-				.toInstance(factory);
-	
-				bind(EntityManager.class)
-				.annotatedWith(persistenceUnit.asAnnotation())
-				.toInstance(manager);
-			} else {
-				bind(EntityManagerFactory.class)
-				.toInstance(factory);
-	
-				bind(EntityManager.class)
-				.toInstance(manager);
-			}
-			
-			install(new DaoModule(persistenceUnit, factory));
-		}
-		bind(new TypeLiteral<Map<Persistence.Unit, EntityManagerFactory>>(){}).toInstance(factories);
-		bind(new TypeLiteral<Map<Persistence.Unit, EntityManager>>(){}).toInstance(managers);
+		final EntityManagerFactory factory = Persistence.createEntityManagerFactory(persistenceUnit.name());
+		bind(PersistenceUnit.class).toInstance(persistenceUnit);
+		bind(EntityManagerFactory.class).toInstance(factory);
+		install(new DaoModule(factory));
 	}
 	
 }
