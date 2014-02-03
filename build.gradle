@@ -12,6 +12,12 @@ jar {
     }
 }
 
+eclipse {
+    classpath {
+       downloadSources=true
+    }
+}
+
 repositories {
     mavenLocal()
     mavenCentral()
