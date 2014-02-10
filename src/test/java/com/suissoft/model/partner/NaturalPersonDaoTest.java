@@ -8,6 +8,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import javax.inject.Inject;
 
@@ -18,6 +19,7 @@ import org.junit.Test;
 
 import com.google.inject.Guice;
 import com.suissoft.model.dao.Dao;
+import com.suissoft.model.dao.NaturalPersonDao;
 import com.suissoft.persistence.PersistenceModule;
 import com.suissoft.persistence.PersistenceUnit;
 
@@ -30,6 +32,9 @@ public class NaturalPersonDaoTest {
 	
 	@Inject
 	private Dao<NaturalPerson> daoNaturalPerson;
+
+	@Inject
+	private NaturalPersonDao daoNaturalPersonExt;
 
 	@Inject
 	private Dao<Address> daoAddress;
@@ -146,5 +151,41 @@ public class NaturalPersonDaoTest {
 		p = daoNaturalPerson.insertOrUpdate(p);
 		assertNotNull("should find by ID", daoAddress.findById(p.getAddresses().get(0).getId()));
 		assertEquals("should have been updated", "Switzerland", daoAddress.findById(p.getAddresses().get(0).getId()).getAddressLine3());
+	}
+	
+	@Test
+	public void shouldInsertAndFindByName() {
+		final String lastName0 = "Mad Man " + UUID.randomUUID();
+		final String lastName1 = "Billabong " + UUID.randomUUID();
+		final NaturalPerson p0 = insert("Henry", lastName0);
+		final NaturalPerson p1 = insert("Piedro", lastName1, new LocalDate(1973, 1, 31));
+		
+		final List<NaturalPerson> allPersons = daoNaturalPerson.findAll();
+		final int index0 = allPersons.indexOf(p0);
+		final int index1 = allPersons.indexOf(p1);
+		assertTrue("person0 should be in list", index0 >= 0);
+		assertTrue("person1 should be in list", index1 >= 0);
+		
+		final List<NaturalPerson> find0 = daoNaturalPersonExt.findByLastName(lastName0);
+		final List<NaturalPerson> find1 = daoNaturalPersonExt.findByLastName(lastName1);
+		final List<NaturalPerson> findNothing = daoNaturalPersonExt.findByLastName("blablabla deflkajldkjfaldk DEFINITELY NOT FOUND" + UUID.randomUUID());
+		
+		assertEquals("find0 should contain one entry", 1, find0.size());
+		assertEquals("find1 should contain one entry", 1, find1.size());
+		assertTrue("findNothing should be empty", findNothing.isEmpty());
+
+		assertEquals("p0 should be in find0", p0, find0.get(0));
+		assertEquals("p1 should be in find1", p1, find1.get(0));
+
+		final List<NaturalPerson> anotherFind0 = daoNaturalPersonExt.findByFirstAndLastName("Henry", lastName0);
+		final List<NaturalPerson> anotherFind1 = daoNaturalPersonExt.findByFirstAndLastName("Piedro", lastName1);
+		final List<NaturalPerson> anotherFindNothing = daoNaturalPersonExt.findByFirstAndLastName("Piedro", lastName0);
+		
+		assertEquals("anotherFind0 should contain one entry", 1, anotherFind0.size());
+		assertEquals("anotherFind1 should contain one entry", 1, anotherFind1.size());
+		assertTrue("findNothing should be empty", anotherFindNothing.isEmpty());
+
+		assertEquals("p0 should be in anotherFind0", p0, anotherFind0.get(0));
+		assertEquals("p1 should be in anotherFind1", p1, anotherFind1.get(0));
 	}
 }

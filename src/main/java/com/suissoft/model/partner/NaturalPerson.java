@@ -6,8 +6,13 @@ import javax.persistence.Table;
 
 import org.joda.time.LocalDate;
 
+import com.suissoft.model.dao.NaturalPersonDao;
+import com.suissoft.model.dao.UseDao;
+import com.suissoft.persistence.dao.NaturalPersonDaoImpl;
+
 @Entity
 @Table(name="T_NATURAL_PERSON")
+@UseDao(type=NaturalPersonDao.class, impl=NaturalPersonDaoImpl.class)
 public class NaturalPerson extends Partner {
 	private String lastName;
 	private String firstName;

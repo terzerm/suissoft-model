@@ -1,4 +1,4 @@
-package com.suissoft.model.dao;
+package com.suissoft.persistence.dao;
 
 import static java.util.Objects.requireNonNull;
 
@@ -13,6 +13,8 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 
 import com.suissoft.model.Entity;
+import com.suissoft.model.dao.Dao;
+import com.suissoft.model.dao.impl.AbstractDao;
 
 @PersistenceUnit
 public class EntityManagerDao<E extends Entity> extends AbstractDao<E> implements Dao<E> {
@@ -27,17 +29,14 @@ public class EntityManagerDao<E extends Entity> extends AbstractDao<E> implement
 		this.selectAllQuery = createSelectAllQuery();
 	}
 	
-	private EntityManager createEntityManager() {
+	protected EntityManagerFactory getEntityManagerFactory() {
+		return entityManagerFactory;
+	}
+	
+	protected EntityManager createEntityManager() {
 		return entityManagerFactory.createEntityManager();
 	}
 	
-	private CriteriaQuery<E> createSelectAllQuery() {
-		final CriteriaBuilder builder = entityManagerFactory.getCriteriaBuilder();
-		final CriteriaQuery<E> query = builder.createQuery(getEntityClass());
-		query.from(getEntityClass());
-		return query;
-	}
-
 	@Override
 	public E findById(long id) {
 		final EntityManager entityManager = createEntityManager();
@@ -46,9 +45,7 @@ public class EntityManagerDao<E extends Entity> extends AbstractDao<E> implement
 	
 	@Override
 	public List<E> findAll() {
-		final EntityManager entityManager = createEntityManager();
-		final TypedQuery<E> typedQuery = entityManager.createQuery(selectAllQuery);
-		return typedQuery.getResultList();
+		return findByQuery(selectAllQuery);
 	}
 
 	@Override
@@ -93,6 +90,19 @@ public class EntityManagerDao<E extends Entity> extends AbstractDao<E> implement
 			}
 			throw e;
 		}
+	}
+	
+	private CriteriaQuery<E> createSelectAllQuery() { 
+		final CriteriaBuilder builder = entityManagerFactory.getCriteriaBuilder();
+		final CriteriaQuery<E> query = builder.createQuery(getEntityClass());
+		query.from(getEntityClass());
+		return query;
+	}
+	
+	protected List<E> findByQuery(CriteriaQuery<E> query) {
+		final EntityManager entityManager = createEntityManager();
+		final TypedQuery<E> typedQuery = entityManager.createQuery(query);
+		return typedQuery.getResultList();
 	}
 
 }

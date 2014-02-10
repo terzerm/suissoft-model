@@ -1,8 +1,9 @@
-package com.suissoft.model.dao;
+package com.suissoft.model.dao.impl;
 
 import static java.util.Objects.requireNonNull;
 
 import com.suissoft.model.Entity;
+import com.suissoft.model.dao.Dao;
 
 abstract public class AbstractDao<E extends Entity> implements Dao<E> {
 	
