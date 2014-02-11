@@ -9,14 +9,14 @@ import com.suissoft.model.partner.NaturalPerson;
  */
 public interface NaturalPersonDao extends Dao<NaturalPerson> {
 	/**
-	 * Returns a list with all matching the given last name
+	 * Returns a list with all persons matching the given last name
 	 * 
 	 * @return all matching entities, possibly an empty list but never null
 	 */
 	List<NaturalPerson> findByLastName(String lastName);
 	
 	/**
-	 * Returns a list with all matching the given names
+	 * Returns a list with all persons matching the given names
 	 * 
 	 * @return all matching entities, possibly an empty list but never null
 	 */
