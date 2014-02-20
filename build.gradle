@@ -21,6 +21,10 @@ jar {
     }
 }
 
+cobertura {
+    coverageFormats=['html','xml']
+}
+
 eclipse {
     classpath {
        downloadSources=true
