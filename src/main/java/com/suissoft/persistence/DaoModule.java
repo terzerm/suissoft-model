@@ -81,11 +81,8 @@ class DaoModule extends AbstractModule {
 
 	private static <E extends Entity, D extends Dao<E>> Class<? extends D> castDaoImpl(Class<E> entityClass, TypeLiteral<Dao<E>> daoTypeLiteral, Class<D> daoType, Class<? extends Dao<?>> daoImpl) {
 		if (daoType.isAssignableFrom(daoImpl)) {
-			//ok, good start
-			//and as we have checked daoType already, we can safely cast now
-			@SuppressWarnings("unchecked")
-			final Class<? extends D> result = (Class<? extends D>)daoImpl;
-			return result;
+			//we can safely cast now
+			return daoImpl.asSubclass(daoType);
 		}
 		throw new IllegalArgumentException("dao impl " + daoImpl.getName() + " specified in @" + UseDao.class.getSimpleName() + " for entity " + entityClass.getName() + " must implement dao type " + daoType.getName());
 	}
