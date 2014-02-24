@@ -9,12 +9,11 @@
 
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 
-		<class>com.suissoft.model.partner.Country</class>
-		<class>com.suissoft.model.partner.Partner</class>
-		<class>com.suissoft.model.partner.Address</class>
-		<class>com.suissoft.model.partner.Country</class>
-		<class>com.suissoft.model.partner.NaturalPerson</class>
-		<class>com.suissoft.model.partner.JuristicPerson</class>
+		<class>com.suissoft.model.app.partner.entity.Address</class>
+		<class>com.suissoft.model.app.partner.entity.Country</class>
+		<class>com.suissoft.model.app.partner.entity.JuristicPerson</class>
+		<class>com.suissoft.model.app.partner.entity.NaturalPerson</class>
+		<class>com.suissoft.model.app.partner.entity.Partner</class>
 
         <properties>
 			<property name="javax.persistence.jdbc.driver" value="org.h2.Driver" />
@@ -35,12 +34,11 @@
 
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 
-		<class>com.suissoft.model.partner.Country</class>
-		<class>com.suissoft.model.partner.Partner</class>
-		<class>com.suissoft.model.partner.Address</class>
-		<class>com.suissoft.model.partner.Country</class>
-		<class>com.suissoft.model.partner.NaturalPerson</class>
-		<class>com.suissoft.model.partner.JuristicPerson</class>
+		<class>com.suissoft.model.app.partner.entity.Address</class>
+		<class>com.suissoft.model.app.partner.entity.Country</class>
+		<class>com.suissoft.model.app.partner.entity.JuristicPerson</class>
+		<class>com.suissoft.model.app.partner.entity.NaturalPerson</class>
+		<class>com.suissoft.model.app.partner.entity.Partner</class>
 
         <properties>
 			<property name="javax.persistence.jdbc.driver" value="org.h2.Driver" />
