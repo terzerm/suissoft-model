@@ -18,6 +18,13 @@ import com.suissoft.model.persistence.UseDao;
 public class JuristicPerson extends Partner {
 	private String name;
 
+	private Client client;
+	private Supplier supplier;
+	private Carrier carrier;
+	private ServiceProvider serviceProvider;
+	private OwnCompany ownCompany;
+	private OwnEmployee ownEmployee;
+	
 	/**
 	 * Returns the juristic person's name
 	 * @return the name of this juristic person
@@ -32,6 +39,54 @@ public class JuristicPerson extends Partner {
 	 */
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	public Client getClient() {
+		return client;
+	}
+	
+	public void setClient(Client client) {
+		this.client = client;
+	}
+	
+	public Supplier getSupplier() {
+		return supplier;
+	}
+	
+	public void setSupplier(Supplier supplier) {
+		this.supplier = supplier;
+	}
+	
+	public Carrier getCarrier() {
+		return carrier;
+	}
+	
+	public void setCarrier(Carrier carrier) {
+		this.carrier = carrier;
+	}
+	
+	public ServiceProvider getServiceProvider() {
+		return serviceProvider;
+	}
+	
+	public void setServiceProvider(ServiceProvider serviceProvider) {
+		this.serviceProvider = serviceProvider;
+	}
+	
+	public OwnCompany getOwnCompany() {
+		return ownCompany;
+	}
+	
+	public void setOwnCompany(OwnCompany ownCompany) {
+		this.ownCompany = ownCompany;
+	}
+	
+	public OwnEmployee getOwnEmployee() {
+		return ownEmployee;
+	}
+	
+	public void setOwnEmployee(OwnEmployee ownEmployee) {
+		this.ownEmployee = ownEmployee;
 	}
 	
 	@Override

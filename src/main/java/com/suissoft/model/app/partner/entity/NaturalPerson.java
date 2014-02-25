@@ -15,10 +15,14 @@ import com.suissoft.model.persistence.UseDao;
 @Table(name="T_NATURAL_PERSON")
 @UseDao(type=NaturalPersonDao.class, impl=NaturalPersonDaoImpl.class)
 public class NaturalPerson extends Partner {
+	
 	private String lastName;
 	private String firstName;
 	private LocalDate birthday;
 
+	private Client client;
+	private OwnEmployee ownEmployee;
+	
 	@Column(length = 64, nullable=false)
 	public String getLastName() {
 		return lastName;
@@ -39,6 +43,22 @@ public class NaturalPerson extends Partner {
 	}
 	public void setBirthday(LocalDate birthday) {
 		this.birthday = birthday;
+	}
+	
+	public Client getClient() {
+		return client;
+	}
+	
+	public void setClient(Client client) {
+		this.client = client;
+	}
+	
+	public OwnEmployee getOwnEmployee() {
+		return ownEmployee;
+	}
+	
+	public void setOwnEmployee(OwnEmployee ownEmployee) {
+		this.ownEmployee = ownEmployee;
 	}
 	
 	@Override

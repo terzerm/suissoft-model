@@ -50,8 +50,8 @@ public class PartnerTest extends AbstractPersistenceUnitTest {
 		entityManager.contains(p2);
 		assertNotEquals("two inserts should generate different ID's", p1.getId(), p2.getId());
 
-		assertNotNull("address list should not be null", p1.getAddresses());
-		assertNotNull("address list should not be null", p2.getAddresses());
+		assertNotNull("address list should not be null", p1.getContacts());
+		assertNotNull("address list should not be null", p2.getContacts());
 	}
 
 	@Test
@@ -71,7 +71,7 @@ public class PartnerTest extends AbstractPersistenceUnitTest {
 		entityManager.contains(p2);
 		assertNotEquals("two inserts should generate different ID's", p1.getId(), p2.getId());
 
-		assertNotNull("address list should not be null", p1.getAddresses());
-		assertNotNull("address list should not be null", p2.getAddresses());
+		assertNotNull("address list should not be null", p1.getContacts());
+		assertNotNull("address list should not be null", p2.getContacts());
 	}
 }

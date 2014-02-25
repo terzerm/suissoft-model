@@ -22,7 +22,7 @@ import com.suissoft.model.entity.AbstractEntity;
 @Inheritance(strategy = InheritanceType.JOINED)
 abstract public class Partner extends AbstractEntity {
 
-	private List<Address> addresses = new ArrayList<>();
+	private List<Contact> contacts = new ArrayList<>();
 	
 	@Id
 	@GeneratedValue
@@ -33,17 +33,17 @@ abstract public class Partner extends AbstractEntity {
 
 	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="owner", orphanRemoval=true)
 	@OrderColumn
-	public List<Address> getAddresses() {
-		return addresses;
+	public List<Contact> getContacts() {
+		return contacts;
 	}
 	
-	public void setAddresses(List<Address> addresses) {
-		this.addresses = addresses;
+	public void setContacts(List<Contact> contacts) {
+		this.contacts = contacts;
 	}
 	
-	public void addAddress(Address address) {
-		address.setOwner(this);
-		addresses.add(address);
+	public void addContact(Contact contact) {
+		contact.setOwner(this);
+		contacts.add(contact);
 	}
 	
 	abstract public <I,R> R accept(PartnerVisitor<I,R> visitor, I input);

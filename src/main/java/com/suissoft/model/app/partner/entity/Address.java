@@ -1,41 +1,23 @@
 package com.suissoft.model.app.partner.entity;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.suissoft.model.entity.AbstractEntity;
-
 @Entity
 @Table(name="T_ADDRESS")
-public class Address extends AbstractEntity {
-	private Partner owner;
+public class Address extends Contact {
+
 	private String addressLine1;
 	private String addressLine2;
 	private String addressLine3;
-	
+	private String zip;
+	private String town;
+	private String region;
 	private Country country;
+	private String longitude;
+	private String latitude;
 	
-	@Id
-	@GeneratedValue
-	@Override
-	public long getId() {
-		return super.getId();
-	}
-
-	@ManyToOne(cascade=CascadeType.PERSIST, fetch=FetchType.LAZY, optional=false)
-	@JoinColumn(nullable=false, updatable=false, insertable=true)
-	public Partner getOwner() {
-		return owner;
-	}
-	public void setOwner(Partner owner) {
-		this.owner = owner;
-	}
 	public String getAddressLine1() {
 		return addressLine1;
 	}
@@ -62,5 +44,45 @@ public class Address extends AbstractEntity {
 
 	public void setCountry(Country country) {
 		this.country = country;
+	}
+	
+	public String getZip() {
+		return zip;
+	}
+	
+	public void setZip(String zip) {
+		this.zip = zip;
+	}
+	
+	public String getTown() {
+		return town;
+	}
+	
+	public void setTown(String town) {
+		this.town = town;
+	}
+	
+	public String getRegion() {
+		return region;
+	}
+	
+	public void setRegion(String region) {
+		this.region = region;
+	}
+	
+	public String getLongitude() {
+		return longitude;
+	}
+	
+	public void setLongitude(String longitude) {
+		this.longitude = longitude;
+	}
+	
+	public String getLatitude() {
+		return latitude;
+	}
+	
+	public void setLatitude(String latitude) {
+		this.latitude = latitude;
 	}
 }

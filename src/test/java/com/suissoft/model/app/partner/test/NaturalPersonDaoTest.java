@@ -20,6 +20,8 @@ import org.junit.Test;
 import com.google.inject.Guice;
 import com.suissoft.model.app.partner.dao.NaturalPersonDao;
 import com.suissoft.model.app.partner.entity.Address;
+import com.suissoft.model.app.partner.entity.Contact;
+import com.suissoft.model.app.partner.entity.ContactType;
 import com.suissoft.model.app.partner.entity.NaturalPerson;
 import com.suissoft.model.persistence.Dao;
 import com.suissoft.model.persistence.PersistenceModule;
@@ -41,6 +43,9 @@ public class NaturalPersonDaoTest {
 	@Inject
 	private Dao<Address> daoAddress;
 
+	@Inject
+	private Dao<ContactType> daoContactType;
+	
 	private List<Long> toDelete;
 
 	@Before
@@ -76,12 +81,14 @@ public class NaturalPersonDaoTest {
 		return person;
 	}
 	
-	private Address createAddress(String... lines) {
+	private Contact createAddressContact(ContactType contactType, String... lines) {
 		if (lines.length > 3) throw new IndexOutOfBoundsException("at max 3 address lines are allowed, but found: " + lines.length);
 		final Address addr = new Address();
+		addr.setContactType(contactType);
 		if (lines.length > 0) addr.setAddressLine1(lines[0]);
 		if (lines.length > 1) addr.setAddressLine2(lines[1]);
 		if (lines.length > 2) addr.setAddressLine3(lines[2]);
+
 		return addr;
 	}
 
@@ -128,7 +135,7 @@ public class NaturalPersonDaoTest {
 		assertTrue("should delete by ID", daoNaturalPerson.delete(p.getId()));
 		assertNull("should no longer find by ID", daoNaturalPerson.findById(p.getId()));
 		p.setId(0);
-		p.setAddresses(new ArrayList<Address>());
+		p.setContacts(new ArrayList<Contact>());
 		p = daoNaturalPerson.insertOrUpdate(p);
 		assertNotNull("should find again by ID", daoNaturalPerson.findById(p.getId()));
 		daoNaturalPerson.delete(p);
@@ -137,22 +144,34 @@ public class NaturalPersonDaoTest {
 	
 	@Test
 	public void shouldInsertWithAddress() {
+		ContactType contactType = getCreateContactType();
 		NaturalPerson p = insert("Peer", "Woodbridge");
-		p.addAddress(createAddress("Emmastrasse 14", "3000 Bern"));
-		p.addAddress(createAddress("Workaholic square", "8005 Zurich"));
+		p.addContact(createAddressContact(contactType, "Emmastrasse 14", "3000 Bern"));
+		p.addContact(createAddressContact(contactType, "Workaholic square", "8005 Zurich"));
 		p = daoNaturalPerson.insertOrUpdate(p);
-		assertNotEquals("generated ID should be different from 0", 0, p.getAddresses().get(0).getId());
-		assertNotEquals("generated ID should be different from 0", 0, p.getAddresses().get(1).getId());
-		assertNotEquals("generated ID's should be different", p.getAddresses().get(0).getId(), p.getAddresses().get(1).getId());
-		assertNotNull("should have owner", p.getAddresses().get(0).getOwner());
-		assertNotNull("should have owner", p.getAddresses().get(1).getOwner());
-		assertNotNull("should find by ID", daoAddress.findById(p.getAddresses().get(0).getId()));
-		assertNotNull("should find by ID", daoAddress.findById(p.getAddresses().get(1).getId()));
+		assertNotEquals("generated ID should be different from 0", 0, p.getContacts().get(0).getId());
+		assertNotEquals("generated ID should be different from 0", 0, p.getContacts().get(1).getId());
+		assertNotEquals("generated ID's should be different", p.getContacts().get(0).getId(), p.getContacts().get(1).getId());
+		assertNotNull("should have owner", p.getContacts().get(0).getOwner());
+		assertNotNull("should have owner", p.getContacts().get(1).getOwner());
+		assertNotNull("should find by ID", daoAddress.findById(p.getContacts().get(0).getId()));
+		assertNotNull("should find by ID", daoAddress.findById(p.getContacts().get(1).getId()));
 
-		p.getAddresses().get(0).setAddressLine3("Switzerland");
+		((Address) p.getContacts().get(0)).setAddressLine3("Switzerland");
 		p = daoNaturalPerson.insertOrUpdate(p);
-		assertNotNull("should find by ID", daoAddress.findById(p.getAddresses().get(0).getId()));
-		assertEquals("should have been updated", "Switzerland", daoAddress.findById(p.getAddresses().get(0).getId()).getAddressLine3());
+		assertNotNull("should find by ID", daoAddress.findById(p.getContacts().get(0).getId()));
+		assertEquals("should have been updated", "Switzerland", daoAddress.findById(p.getContacts().get(0).getId()).getAddressLine3());
+	}
+	
+	private ContactType getCreateContactType() {
+		List<ContactType> existingContactTypes = daoContactType.findAll();
+		if (existingContactTypes.isEmpty()) {
+			ContactType newContactType = new ContactType();
+			newContactType.setName("Friend");
+			daoContactType.insertOrUpdate(newContactType);
+			existingContactTypes = daoContactType.findAll();
+		}
+		return existingContactTypes.get(0);
 	}
 	
 	@Test
