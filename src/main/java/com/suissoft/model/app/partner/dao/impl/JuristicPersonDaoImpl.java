@@ -19,7 +19,7 @@ public class JuristicPersonDaoImpl extends AbstractPartnerDaoImpl<JuristicPerson
 	
 	@Override
 	protected Predicate buildPredicateForSingleSearchTerm(Root<JuristicPerson> root, CriteriaBuilder builder, String searchTerm) {
-		Predicate predicate = builder.like(root.<String>get("name"), "%" + searchTerm + "%");
+		Predicate predicate = builder.like(builder.lower(root.<String>get("name")), "%" + searchTerm.toLowerCase() + "%");
 		return predicate;
 	}
 

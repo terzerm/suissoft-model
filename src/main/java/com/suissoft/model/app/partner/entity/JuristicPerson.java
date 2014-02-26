@@ -2,6 +2,7 @@ package com.suissoft.model.app.partner.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.suissoft.model.app.partner.PartnerVisitor;
@@ -41,6 +42,7 @@ public class JuristicPerson extends Partner {
 		this.name = name;
 	}
 	
+	@OneToOne
 	public Client getClient() {
 		return client;
 	}
@@ -49,6 +51,7 @@ public class JuristicPerson extends Partner {
 		this.client = client;
 	}
 	
+	@OneToOne
 	public Supplier getSupplier() {
 		return supplier;
 	}
@@ -57,6 +60,7 @@ public class JuristicPerson extends Partner {
 		this.supplier = supplier;
 	}
 	
+	@OneToOne
 	public Carrier getCarrier() {
 		return carrier;
 	}
@@ -65,6 +69,7 @@ public class JuristicPerson extends Partner {
 		this.carrier = carrier;
 	}
 	
+	@OneToOne
 	public ServiceProvider getServiceProvider() {
 		return serviceProvider;
 	}
@@ -73,6 +78,7 @@ public class JuristicPerson extends Partner {
 		this.serviceProvider = serviceProvider;
 	}
 	
+	@OneToOne
 	public OwnCompany getOwnCompany() {
 		return ownCompany;
 	}
@@ -81,6 +87,7 @@ public class JuristicPerson extends Partner {
 		this.ownCompany = ownCompany;
 	}
 	
+	@OneToOne
 	public OwnEmployee getOwnEmployee() {
 		return ownEmployee;
 	}

@@ -3,6 +3,7 @@ package com.suissoft.model.app.product.entity;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.suissoft.model.entity.AbstractEntity;
@@ -20,6 +21,7 @@ public class Product extends AbstractEntity {
 		return super.getId();
 	}
 
+	@ManyToOne
 	public ProductCategory getProductCategory() {
 		return productCategory;
 	}

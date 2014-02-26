@@ -3,6 +3,7 @@ package com.suissoft.model.app.product.entity;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.suissoft.model.app.partner.entity.Client;
@@ -22,6 +23,7 @@ public class Order extends AbstractEntity {
 		return super.getId();
 	}
 
+	@ManyToOne
 	public Client getOrderer() {
 		return orderer;
 	}
@@ -30,6 +32,7 @@ public class Order extends AbstractEntity {
 		this.orderer = orderer;
 	}
 	
+	@ManyToOne
 	public Product getProduct() {
 		return product;
 	}

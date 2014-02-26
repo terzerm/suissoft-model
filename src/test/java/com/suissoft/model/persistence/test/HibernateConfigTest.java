@@ -4,7 +4,6 @@ import static org.junit.Assert.assertNotNull;
 
 import java.io.InputStream;
 import java.lang.management.ManagementFactory;
-import java.lang.management.RuntimeMXBean;
 
 import javax.persistence.EntityManager;
 
@@ -20,8 +19,7 @@ public class HibernateConfigTest {
 
 	@BeforeClass
 	public static void beforeClass() {
-		RuntimeMXBean rt = ManagementFactory.getRuntimeMXBean();
-		System.out.println("CLASSPATH: " + rt.getClassPath());
+		/**RuntimeMXBean rt =*/ ManagementFactory.getRuntimeMXBean();
 	}
 	
 	@Test

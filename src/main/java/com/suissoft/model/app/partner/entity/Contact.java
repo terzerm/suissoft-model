@@ -39,7 +39,7 @@ public class Contact extends AbstractEntity {
 		this.owner = owner;
 	}
 
-	@ManyToOne(targetEntity=ContactType.class, cascade=CascadeType.PERSIST, fetch=FetchType.LAZY, optional=false)
+	@ManyToOne(cascade=CascadeType.PERSIST, fetch=FetchType.LAZY, optional=false)
 	@JoinColumn(nullable=false, updatable=true, insertable=true)
 	public ContactType getContactType() {
 		return contactType;

@@ -1,4 +1,4 @@
-package com.suissoft.model.app.partner.test;
+package com.suissoft.model.app.partner.entity.test;
 
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
@@ -25,6 +25,7 @@ public class PartnerTest extends AbstractPersistenceUnitTest {
 		entitiesToDelete.add(p);
 		return p;
 	}
+
 	private JuristicPerson insertJuristicPerson(String name) {
 		final JuristicPerson p = new JuristicPerson();
 		p.setName(name);

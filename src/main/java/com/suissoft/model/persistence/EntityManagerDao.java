@@ -53,12 +53,7 @@ public class EntityManagerDao<E extends Entity> extends AbstractDao<E> implement
 		final EntityTransaction transaction = entityManager.getTransaction();
 		transaction.begin();
 		try {
-//			if (entityManager.contains(entity)) {
-				result = entityManager.merge(entity);
-//			} else {
-//				entityManager.persist(entity);
-//				result = entity;
-//			}
+			result = entityManager.merge(entity);
 			transaction.commit();
 		} catch (Exception e) {
 			if (transaction.isActive()) {

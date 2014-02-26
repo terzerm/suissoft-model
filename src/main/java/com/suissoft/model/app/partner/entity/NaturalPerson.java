@@ -2,6 +2,7 @@ package com.suissoft.model.app.partner.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.joda.time.LocalDate;
@@ -45,6 +46,7 @@ public class NaturalPerson extends Partner {
 		this.birthday = birthday;
 	}
 	
+	@OneToOne
 	public Client getClient() {
 		return client;
 	}
@@ -53,6 +55,7 @@ public class NaturalPerson extends Partner {
 		this.client = client;
 	}
 	
+	@OneToOne
 	public OwnEmployee getOwnEmployee() {
 		return ownEmployee;
 	}

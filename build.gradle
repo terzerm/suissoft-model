@@ -13,7 +13,7 @@ apply plugin: 'maven'
 
 sourceCompatibility = 1.7
 
-version = "4e3acd925dd01fe6107aa3f8a2c4e28d80caa634"
+version = "kandy-1.0"
 group = 'com.suissoft'
 
 jar {

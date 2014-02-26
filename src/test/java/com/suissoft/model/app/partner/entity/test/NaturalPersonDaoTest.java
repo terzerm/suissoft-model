@@ -1,6 +1,7 @@
-package com.suissoft.model.app.partner.test;
+package com.suissoft.model.app.partner.entity.test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -208,5 +209,56 @@ public class NaturalPersonDaoTest {
 
 		assertEquals("p0 should be in anotherFind0", p0, anotherFind0.get(0));
 		assertEquals("p1 should be in anotherFind1", p1, anotherFind1.get(0));
+	}
+	
+	@Test
+	public void shouldFindOnePersonByOneSearchTerm() {
+		NaturalPerson einstein = insert("Albert", "Einstein");
+		NaturalPerson newton = insert("Isaac", "Newton");
+		
+		List<NaturalPerson> resultEinstein = daoNaturalPersonExt.findBySearchTerms(buildSearchTerms("bert"));
+		assertEquals(1, resultEinstein.size());
+		assertTrue(resultEinstein.contains(einstein));
+		assertFalse(resultEinstein.contains(newton));
+	}
+	
+	@Test
+	public void shouldFindBothByTwoSearchTerms() {
+		NaturalPerson einstein = insert("Albert", "Einstein");
+		NaturalPerson newton = insert("Isaac", "Newton");
+		
+		List<NaturalPerson> resultBoth = daoNaturalPersonExt.findBySearchTerms(buildSearchTerms("a"));
+		assertEquals(2, resultBoth.size());
+		assertTrue(resultBoth.contains(einstein));
+		assertTrue(resultBoth.contains(newton));
+	}
+
+	@Test
+	public void shouldFindNoneByTwoSearchTerms() {
+		NaturalPerson einstein = insert("Albert", "Einstein");
+		NaturalPerson newton = insert("Isaac", "Newton");
+		
+		List<NaturalPerson> resultNone = daoNaturalPersonExt.findBySearchTerms(buildSearchTerms("hello", "world"));
+		assertEquals(0, resultNone.size());
+		assertFalse(resultNone.contains(einstein));
+		assertFalse(resultNone.contains(newton));
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void shouldFailToSearchByZeroSearchTerms() {
+		daoNaturalPersonExt.findBySearchTerms(buildSearchTerms());
+	}
+	
+	@Test(expected = NullPointerException.class)
+	public void shouldFailToSearchByNullSearchTerms() {
+		daoNaturalPersonExt.findBySearchTerms(null);
+	}
+
+	private List<String> buildSearchTerms(String ...parts) {
+		List<String> result = new ArrayList<>();
+		for (String s: parts) {
+			result.add(s);
+		}
+		return result;
 	}
 }
