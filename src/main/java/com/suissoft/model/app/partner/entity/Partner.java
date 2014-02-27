@@ -11,7 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.OneToMany;
-import javax.persistence.OrderColumn;
 import javax.persistence.Table;
 
 import com.suissoft.model.app.partner.PartnerVisitor;
@@ -22,7 +21,8 @@ import com.suissoft.model.entity.AbstractEntity;
 @Inheritance(strategy = InheritanceType.JOINED)
 abstract public class Partner extends AbstractEntity {
 
-	private List<Contact> contacts = new ArrayList<>();
+	private List<ContactInfo> contactInfos = new ArrayList<>();
+	private List<Address> addresses = new ArrayList<>();
 	
 	@Id
 	@GeneratedValue
@@ -32,19 +32,33 @@ abstract public class Partner extends AbstractEntity {
 	}
 
 	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="owner", orphanRemoval=true)
-	@OrderColumn
-	public List<Contact> getContacts() {
-		return contacts;
+	public List<ContactInfo> getContactInfos() {
+		return contactInfos;
 	}
 	
-	public void setContacts(List<Contact> contacts) {
-		this.contacts = contacts;
+	public void setContactInfos(List<ContactInfo> contactInfos) {
+		this.contactInfos = contactInfos;
 	}
 	
-	public void addContact(Contact contact) {
-		contact.setOwner(this);
-		contacts.add(contact);
+	public void addContactInfo(ContactInfo contactInfo) {
+		contactInfo.setOwner(this);
+		contactInfos.add(contactInfo);
+	}
+	
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="owner", orphanRemoval=true)
+	public List<Address> getAddresses() {
+		return addresses;
+	}
+	
+	public void setAddresses(List<Address> addresses) {
+		this.addresses = addresses;
+	}
+	
+	public void addAddress(Address address) {
+		address.setOwner(this);
+		addresses.add(address);
 	}
 	
 	abstract public <I,R> R accept(PartnerVisitor<I,R> visitor, I input);
+
 }

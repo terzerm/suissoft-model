@@ -8,7 +8,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.OrderColumn;
 import javax.persistence.Table;
 
 import com.suissoft.model.app.product.entity.Order;
@@ -28,7 +27,6 @@ public class Client extends AbstractEntity {
 	}
 
 	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="orderer", orphanRemoval=true)
-	@OrderColumn
 	public List<Order> getOrders() {
 		return orders;
 	}

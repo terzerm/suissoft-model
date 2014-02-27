@@ -17,13 +17,17 @@ import org.joda.time.LocalDate;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import com.google.inject.Guice;
 import com.suissoft.model.app.partner.dao.NaturalPersonDao;
 import com.suissoft.model.app.partner.entity.Address;
-import com.suissoft.model.app.partner.entity.Contact;
-import com.suissoft.model.app.partner.entity.ContactType;
+import com.suissoft.model.app.partner.entity.AddressType;
+import com.suissoft.model.app.partner.entity.ContactInfo;
+import com.suissoft.model.app.partner.entity.ContactInfoType;
 import com.suissoft.model.app.partner.entity.NaturalPerson;
+import com.suissoft.model.entity.Entity;
 import com.suissoft.model.persistence.Dao;
 import com.suissoft.model.persistence.PersistenceModule;
 import com.suissoft.model.persistence.PersistenceUnit;
@@ -31,6 +35,7 @@ import com.suissoft.model.persistence.PersistenceUnit;
 /**
  * Unit test for {@link Dao} for {@link NaturalPerson}
  */
+@RunWith(MockitoJUnitRunner.class)
 public class NaturalPersonDaoTest {
 	
 	private final PersistenceUnit unit = PersistenceUnit.H2_FILE;
@@ -45,8 +50,14 @@ public class NaturalPersonDaoTest {
 	private Dao<Address> daoAddress;
 
 	@Inject
-	private Dao<ContactType> daoContactType;
+	private Dao<ContactInfoType> daoContactType;
 	
+	@Inject
+	private Dao<AddressType> daoAddressType;
+	
+	@Inject
+	private Dao<ContactInfoType> daoContactInfoType;
+
 	private List<Long> toDelete;
 
 	@Before
@@ -64,10 +75,10 @@ public class NaturalPersonDaoTest {
 		}
 	}
 
-	private NaturalPerson insert(String firstName, String lastName) {
-		return insert(firstName, lastName, null);
+	private NaturalPerson insertNaturalPerson(String firstName, String lastName) {
+		return insertNaturalPerson(firstName, lastName, null);
 	}
-	private NaturalPerson insert(String firstName, String lastName, LocalDate birthday) {
+	private NaturalPerson insertNaturalPerson(String firstName, String lastName, LocalDate birthday) {
 		return insert(firstName, lastName, birthday, new NaturalPerson());
 	}
 	private NaturalPerson insertCreateByDao(String firstName, String lastName, LocalDate birthday) {
@@ -82,10 +93,10 @@ public class NaturalPersonDaoTest {
 		return person;
 	}
 	
-	private Contact createAddressContact(ContactType contactType, String... lines) {
+	private Address createAddress(AddressType addressType, String... lines) {
 		if (lines.length > 3) throw new IndexOutOfBoundsException("at max 3 address lines are allowed, but found: " + lines.length);
 		final Address addr = new Address();
-		addr.setContactType(contactType);
+		addr.setAddressType(addressType);
 		if (lines.length > 0) addr.setAddressLine1(lines[0]);
 		if (lines.length > 1) addr.setAddressLine2(lines[1]);
 		if (lines.length > 2) addr.setAddressLine3(lines[2]);
@@ -95,8 +106,8 @@ public class NaturalPersonDaoTest {
 
 	@Test
 	public void shouldInsertAndFindAll() {
-		final NaturalPerson p0 = insert("Poor", "NoBirthayMan");
-		final NaturalPerson p1 = insert("Piedro", "Mullero", new LocalDate(1973, 1, 31));
+		final NaturalPerson p0 = insertNaturalPerson("Poor", "NoBirthayMan");
+		final NaturalPerson p1 = insertNaturalPerson("Piedro", "Mullero", new LocalDate(1973, 1, 31));
 		final NaturalPerson p2 = insertCreateByDao("Marta", "Bellerista", new LocalDate(1975, 4, 22));
 		
 		assertNotEquals("generated ID should be different from 0", 0, p0.getId());
@@ -109,20 +120,12 @@ public class NaturalPersonDaoTest {
 		final List<NaturalPerson> allPersons = daoNaturalPerson.findAll();
 		assertTrue("at least 3 persons should exist now", 3 <= allPersons.size());
 		
-		final int index0 = allPersons.indexOf(p0);
-		final int index1 = allPersons.indexOf(p1);
-		final int index2 = allPersons.indexOf(p2);
-		assertTrue("person0 should be in list", index0 >= 0);
-		assertTrue("person1 should be in list", index1 >= 0);
-		assertTrue("person2 should be in list", index2 >= 0);
-		assertNotEquals("person0 should different from person1", index0, index1);
-		assertNotEquals("person1 should different from person2", index1, index2);
-		assertNotEquals("person0 should different from person2", index0, index2);
+		assertEntityIncluded(allPersons, p0.getId(), p1.getId(), p2.getId());
 	}
 
 	@Test
 	public void shouldUpdate() {
-		final NaturalPerson p = insert("Poor", "NoBirthayMan");
+		final NaturalPerson p = insertNaturalPerson("Poor", "NoBirthayMan");
 		assertNotEquals("generated ID should be different from 0", 0, p.getId());
 		p.setLastName("HappyBirthddayMan");
 		p.setBirthday(new LocalDate(1956, 12, 22));
@@ -130,13 +133,13 @@ public class NaturalPersonDaoTest {
 	}
 	@Test
 	public void shouldDelete() {
-		NaturalPerson p = insert("Peer", "Woodbridge");
+		NaturalPerson p = insertNaturalPerson("Peer", "Woodbridge");
 		assertNotEquals("generated ID should be different from 0", 0, p.getId());
 		assertNotNull("should find by ID", daoNaturalPerson.findById(p.getId()));
 		assertTrue("should delete by ID", daoNaturalPerson.delete(p.getId()));
 		assertNull("should no longer find by ID", daoNaturalPerson.findById(p.getId()));
 		p.setId(0);
-		p.setContacts(new ArrayList<Contact>());
+//TODO check if should be deleted		p.setContacts(new ArrayList<Contact>());
 		p = daoNaturalPerson.insertOrUpdate(p);
 		assertNotNull("should find again by ID", daoNaturalPerson.findById(p.getId()));
 		daoNaturalPerson.delete(p);
@@ -144,49 +147,75 @@ public class NaturalPersonDaoTest {
 	}
 	
 	@Test
-	public void shouldInsertWithAddress() {
-		ContactType contactType = getCreateContactType();
-		NaturalPerson p = insert("Peer", "Woodbridge");
-		p.addContact(createAddressContact(contactType, "Emmastrasse 14", "3000 Bern"));
-		p.addContact(createAddressContact(contactType, "Workaholic square", "8005 Zurich"));
-		p = daoNaturalPerson.insertOrUpdate(p);
-		assertNotEquals("generated ID should be different from 0", 0, p.getContacts().get(0).getId());
-		assertNotEquals("generated ID should be different from 0", 0, p.getContacts().get(1).getId());
-		assertNotEquals("generated ID's should be different", p.getContacts().get(0).getId(), p.getContacts().get(1).getId());
-		assertNotNull("should have owner", p.getContacts().get(0).getOwner());
-		assertNotNull("should have owner", p.getContacts().get(1).getOwner());
-		assertNotNull("should find by ID", daoAddress.findById(p.getContacts().get(0).getId()));
-		assertNotNull("should find by ID", daoAddress.findById(p.getContacts().get(1).getId()));
+	public void shouldInsertWithContactInfo() {
+		ContactInfoType phoneType = getCreateContactInfoType();
 
-		((Address) p.getContacts().get(0)).setAddressLine3("Switzerland");
+		NaturalPerson p = insertNaturalPerson("Friedrich", "Nietzsche");
+		p.addContactInfo(createContactInfo(phoneType, "0800 666"));
+		p.addContactInfo(new ContactInfo());
 		p = daoNaturalPerson.insertOrUpdate(p);
-		assertNotNull("should find by ID", daoAddress.findById(p.getContacts().get(0).getId()));
-		assertEquals("should have been updated", "Switzerland", daoAddress.findById(p.getContacts().get(0).getId()).getAddressLine3());
 	}
 	
-	private ContactType getCreateContactType() {
-		List<ContactType> existingContactTypes = daoContactType.findAll();
-		if (existingContactTypes.isEmpty()) {
-			ContactType newContactType = new ContactType();
-			newContactType.setName("Friend");
-			daoContactType.insertOrUpdate(newContactType);
-			existingContactTypes = daoContactType.findAll();
+	@Test
+	public void shouldInsertWithAddress() {
+		AddressType addressType = getCreateAddressType();
+
+		NaturalPerson p = insertNaturalPerson("Peer", "Woodbridge");
+		p.addAddress(createAddress(addressType, "Emmastrasse 14", "3000 Bern"));
+		p.addAddress(createAddress(addressType, "Workaholic square", "8005 Zurich"));
+		p = daoNaturalPerson.insertOrUpdate(p);
+		assertNotEquals("generated ID should be different from 0", 0, p.getAddresses().get(0).getId());
+		assertNotEquals("generated ID should be different from 0", 0, p.getAddresses().get(1).getId());
+		assertNotEquals("generated ID's should be different", p.getAddresses().get(0).getId(), p.getAddresses().get(1).getId());
+		assertNotNull("should have owner", p.getAddresses().get(0).getOwner());
+		assertNotNull("should have owner", p.getAddresses().get(1).getOwner());
+		assertNotNull("should find by ID", daoAddress.findById(p.getAddresses().get(0).getId()));
+		assertNotNull("should find by ID", daoAddress.findById(p.getAddresses().get(1).getId()));
+
+		((Address) p.getAddresses().get(0)).setAddressLine3("Switzerland");
+		p = daoNaturalPerson.insertOrUpdate(p);
+		assertNotNull("should find by ID", daoAddress.findById(p.getAddresses().get(0).getId()));
+		assertEquals("should have been updated", "Switzerland", daoAddress.findById(p.getAddresses().get(0).getId()).getAddressLine3());
+	}
+	
+	private AddressType getCreateAddressType() {
+		List<AddressType> existingAddressTypes = daoAddressType.findAll();
+		if (existingAddressTypes.isEmpty()) {
+			AddressType newAddressType = new AddressType();
+			newAddressType.setName("Friend");
+			daoAddressType.insertOrUpdate(newAddressType);
+			existingAddressTypes = daoAddressType.findAll();
 		}
-		return existingContactTypes.get(0);
+		return existingAddressTypes.get(0);
+	}
+
+	private ContactInfoType getCreateContactInfoType() {
+		List<ContactInfoType> existingContactInfoTypes = daoContactInfoType.findAll();
+		if (existingContactInfoTypes.isEmpty()) {
+			ContactInfoType newContactInfoType = new ContactInfoType();
+			newContactInfoType.setName("Snailmail");
+			daoContactInfoType.insertOrUpdate(newContactInfoType);
+			existingContactInfoTypes = daoContactInfoType.findAll();
+		}
+		return existingContactInfoTypes.get(0);
+	}
+
+	private ContactInfo createContactInfo(ContactInfoType contactInfoType, String value) {
+		ContactInfo contactInfo = new ContactInfo();
+		contactInfo.setContactInfoType(contactInfoType);
+		contactInfo.setValue(value);
+		return contactInfo;
 	}
 	
 	@Test
 	public void shouldInsertAndFindByName() {
 		final String lastName0 = "Mad Man " + UUID.randomUUID();
 		final String lastName1 = "Billabong " + UUID.randomUUID();
-		final NaturalPerson p0 = insert("Henry", lastName0);
-		final NaturalPerson p1 = insert("Piedro", lastName1, new LocalDate(1973, 1, 31));
+		final NaturalPerson p0 = insertNaturalPerson("Henry", lastName0);
+		final NaturalPerson p1 = insertNaturalPerson("Piedro", lastName1, new LocalDate(1973, 1, 31));
 		
 		final List<NaturalPerson> allPersons = daoNaturalPerson.findAll();
-		final int index0 = allPersons.indexOf(p0);
-		final int index1 = allPersons.indexOf(p1);
-		assertTrue("person0 should be in list", index0 >= 0);
-		assertTrue("person1 should be in list", index1 >= 0);
+		assertEntityIncluded(allPersons, p0.getId(), p1.getId());
 		
 		final List<NaturalPerson> find0 = daoNaturalPersonExt.findByLastName(lastName0);
 		final List<NaturalPerson> find1 = daoNaturalPersonExt.findByLastName(lastName1);
@@ -196,52 +225,58 @@ public class NaturalPersonDaoTest {
 		assertEquals("find1 should contain one entry", 1, find1.size());
 		assertTrue("findNothing should be empty", findNothing.isEmpty());
 
-		assertEquals("p0 should be in find0", p0, find0.get(0));
-		assertEquals("p1 should be in find1", p1, find1.get(0));
+		assertEntityIncluded(find0, p0.getId());
+		assertEntityIncluded(find1, p1.getId());
 
 		final List<NaturalPerson> anotherFind0 = daoNaturalPersonExt.findByFirstAndLastName("Henry", lastName0);
 		final List<NaturalPerson> anotherFind1 = daoNaturalPersonExt.findByFirstAndLastName("Piedro", lastName1);
 		final List<NaturalPerson> anotherFindNothing = daoNaturalPersonExt.findByFirstAndLastName("Piedro", lastName0);
 		
-		assertEquals("anotherFind0 should contain one entry", 1, anotherFind0.size());
-		assertEquals("anotherFind1 should contain one entry", 1, anotherFind1.size());
+		assertEntityIncluded(anotherFind0, p0.getId());
+		assertEntityIncluded(anotherFind1, p1.getId());
 		assertTrue("findNothing should be empty", anotherFindNothing.isEmpty());
 
-		assertEquals("p0 should be in anotherFind0", p0, anotherFind0.get(0));
-		assertEquals("p1 should be in anotherFind1", p1, anotherFind1.get(0));
+		assertEntityIncluded(anotherFind0, p0.getId());
+		assertEntityIncluded(anotherFind1, p1.getId());
 	}
 	
 	@Test
 	public void shouldFindOnePersonByOneSearchTerm() {
-		NaturalPerson einstein = insert("Albert", "Einstein");
-		NaturalPerson newton = insert("Isaac", "Newton");
+		StringBuilder sb = new StringBuilder();
+		for (NaturalPerson np: daoNaturalPerson.findAll()) {
+			sb.append("P1: " + np.toString() + "\n");
+		}
+		for (NaturalPerson np: daoNaturalPersonExt.findAll()) {
+			sb.append("P2: " + np.toString() + "\n");
+		}
+		System.out.println(sb.toString());
+		NaturalPerson einstein = insertNaturalPerson("Albert", "Einstein");
+		NaturalPerson newton = insertNaturalPerson("Isaac", "Newton");
 		
 		List<NaturalPerson> resultEinstein = daoNaturalPersonExt.findBySearchTerms(buildSearchTerms("bert"));
 		assertEquals(1, resultEinstein.size());
-		assertTrue(resultEinstein.contains(einstein));
-		assertFalse(resultEinstein.contains(newton));
+		assertTrue(resultEinstein.get(0).getId() == einstein.getId());
+		assertFalse(resultEinstein.get(0).getId() == newton.getId());
 	}
 	
 	@Test
 	public void shouldFindBothByTwoSearchTerms() {
-		NaturalPerson einstein = insert("Albert", "Einstein");
-		NaturalPerson newton = insert("Isaac", "Newton");
+		NaturalPerson einstein = insertNaturalPerson("Albert", "Einstein");
+		NaturalPerson newton = insertNaturalPerson("Isaac", "Newton");
 		
 		List<NaturalPerson> resultBoth = daoNaturalPersonExt.findBySearchTerms(buildSearchTerms("a"));
 		assertEquals(2, resultBoth.size());
-		assertTrue(resultBoth.contains(einstein));
-		assertTrue(resultBoth.contains(newton));
+		assertEntityIncluded(resultBoth, einstein.getId(), newton.getId());
 	}
 
 	@Test
 	public void shouldFindNoneByTwoSearchTerms() {
-		NaturalPerson einstein = insert("Albert", "Einstein");
-		NaturalPerson newton = insert("Isaac", "Newton");
+		NaturalPerson einstein = insertNaturalPerson("Albert", "Einstein");
+		NaturalPerson newton = insertNaturalPerson("Isaac", "Newton");
 		
 		List<NaturalPerson> resultNone = daoNaturalPersonExt.findBySearchTerms(buildSearchTerms("hello", "world"));
 		assertEquals(0, resultNone.size());
-		assertFalse(resultNone.contains(einstein));
-		assertFalse(resultNone.contains(newton));
+		assertEntityNotIncluded(resultNone, einstein.getId(), newton.getId());
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
@@ -253,7 +288,7 @@ public class NaturalPersonDaoTest {
 	public void shouldFailToSearchByNullSearchTerms() {
 		daoNaturalPersonExt.findBySearchTerms(null);
 	}
-
+	
 	private List<String> buildSearchTerms(String ...parts) {
 		List<String> result = new ArrayList<>();
 		for (String s: parts) {
@@ -261,4 +296,29 @@ public class NaturalPersonDaoTest {
 		}
 		return result;
 	}
+	
+	private void assertEntityIncluded(List<? extends Entity> entities, Long...ids) {
+		for (long id: ids) {
+			boolean found = false;
+			for (Entity entity: entities) {
+				if (entity.getId() == id) {
+					found = true;
+				}
+			}
+			assertTrue(found);
+		}
+	}
+	
+	private void assertEntityNotIncluded(List<? extends Entity> entities, Long...ids) {
+		for (long id: ids) {
+			boolean found = false;
+			for (Entity entity: entities) {
+				if (entity.getId() == id) {
+					found = true;
+				}
+			}
+			assertFalse(found);
+		}
+	}
+
 }

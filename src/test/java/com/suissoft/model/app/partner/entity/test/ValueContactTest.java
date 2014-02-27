@@ -5,21 +5,21 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.suissoft.model.app.partner.entity.ValueContact;
+import com.suissoft.model.app.partner.entity.ContactInfo;
 
 public class ValueContactTest {
 
-	private ValueContact valueContact;
+	private ContactInfo contactInfo;
 	
 	@Before
 	public void setup() {
-		valueContact = new ValueContact();
+		contactInfo = new ContactInfo();
 	}
 	
 	@Test
 	public void shouldTestValueGetterAndSetter() {
 		String value = "TheTestValue";
-		valueContact.setValue(value);
-		assertEquals(value, valueContact.getValue());
+		contactInfo.setValue(value);
+		assertEquals(value, contactInfo.getValue());
 	}
 }

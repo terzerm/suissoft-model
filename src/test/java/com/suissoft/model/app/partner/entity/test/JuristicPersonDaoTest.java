@@ -17,8 +17,9 @@ import org.junit.Test;
 import com.google.inject.Guice;
 import com.suissoft.model.app.partner.dao.JuristicPersonDao;
 import com.suissoft.model.app.partner.entity.Address;
-import com.suissoft.model.app.partner.entity.ContactType;
+import com.suissoft.model.app.partner.entity.ContactInfoType;
 import com.suissoft.model.app.partner.entity.JuristicPerson;
+import com.suissoft.model.entity.Entity;
 import com.suissoft.model.persistence.Dao;
 import com.suissoft.model.persistence.PersistenceModule;
 import com.suissoft.model.persistence.PersistenceUnit;
@@ -37,7 +38,7 @@ public class JuristicPersonDaoTest {
 	private Dao<Address> daoAddress;
 
 	@Inject
-	private Dao<ContactType> daoContactType;
+	private Dao<ContactInfoType> daoContactType;
 	
 	private List<Long> toDelete;
 
@@ -67,8 +68,8 @@ public class JuristicPersonDaoTest {
 		
 		List<JuristicPerson> resultAcme = daoJuristicPersonExt.findBySearchTerms(buildSearchTerms("inc"));
 		assertEquals(1, resultAcme.size());
-		assertTrue(resultAcme.contains(acme));
-		assertFalse(resultAcme.contains(cocaCola));
+		assertEntityIncluded(resultAcme, acme.getId());
+		assertEntityNotIncluded(resultAcme, cocaCola.getId());
 	}
 	
 	@Test
@@ -78,8 +79,7 @@ public class JuristicPersonDaoTest {
 		
 		List<JuristicPerson> resultBoth = daoJuristicPersonExt.findBySearchTerms(buildSearchTerms("a"));
 		assertEquals(2, resultBoth.size());
-		assertTrue(resultBoth.contains(acme));
-		assertTrue(resultBoth.contains(cocaCola));
+		assertEntityIncluded(resultBoth, acme.getId(), cocaCola.getId());
 	}
 
 	@Test
@@ -117,6 +117,30 @@ public class JuristicPersonDaoTest {
 		company = daoJuristicPerson.insertOrUpdate(company);
 		toDelete.add(company.getId());
 		return company;
+	}
+
+	private void assertEntityIncluded(List<? extends Entity> entities, Long...ids) {
+		for (long id: ids) {
+			boolean found = false;
+			for (Entity entity: entities) {
+				if (entity.getId() == id) {
+					found = true;
+				}
+			}
+			assertTrue(found);
+		}
+	}
+
+	private void assertEntityNotIncluded(List<? extends Entity> entities, Long...ids) {
+		for (long id: ids) {
+			boolean found = false;
+			for (Entity entity: entities) {
+				if (entity.getId() == id) {
+					found = true;
+				}
+			}
+			assertFalse(found);
+		}
 	}
 
 }
