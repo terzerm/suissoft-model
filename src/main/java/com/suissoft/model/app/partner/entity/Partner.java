@@ -12,6 +12,7 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.suissoft.model.app.partner.PartnerVisitor;
 import com.suissoft.model.entity.AbstractEntity;
@@ -60,5 +61,9 @@ abstract public class Partner extends AbstractEntity {
 	}
 	
 	abstract public <I,R> R accept(PartnerVisitor<I,R> visitor, I input);
+	@Transient
+	abstract public Client getClient();
+	@Transient
+	abstract public void setClient(Client client);
 
 }

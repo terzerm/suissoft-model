@@ -1,5 +1,6 @@
 package com.suissoft.model.app.partner.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
@@ -60,7 +61,7 @@ public class JuristicPerson extends Partner {
 		this.supplier = supplier;
 	}
 	
-	@OneToOne
+	@OneToOne(cascade=CascadeType.ALL)
 	public Carrier getCarrier() {
 		return carrier;
 	}
