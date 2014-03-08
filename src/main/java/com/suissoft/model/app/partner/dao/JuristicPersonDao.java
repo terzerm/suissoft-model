@@ -5,6 +5,9 @@ import java.util.List;
 import com.suissoft.model.app.partner.entity.JuristicPerson;
 import com.suissoft.model.persistence.Dao;
 
+/**
+ * Specialised DAO for {@link JuristicPerson}
+ */
 public interface JuristicPersonDao extends Dao<JuristicPerson> {
 
 	/**

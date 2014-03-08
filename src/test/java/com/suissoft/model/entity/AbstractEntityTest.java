@@ -1,4 +1,4 @@
-package com.suissoft.model.entity.test;
+package com.suissoft.model.entity;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;

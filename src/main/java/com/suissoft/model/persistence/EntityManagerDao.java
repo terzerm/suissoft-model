@@ -7,14 +7,12 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
-import javax.persistence.PersistenceUnit;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 
 import com.suissoft.model.entity.Entity;
 
-@PersistenceUnit
 public class EntityManagerDao<E extends Entity> extends AbstractDao<E> implements Dao<E> {
 	
 	private final EntityManagerFactory entityManagerFactory;

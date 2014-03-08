@@ -1,4 +1,4 @@
-package com.suissoft.model.app.product.entity.test;
+package com.suissoft.model.app.product.entity;
 
 import static org.junit.Assert.assertEquals;
 

@@ -1,4 +1,4 @@
-package com.suissoft.model.app.partner.entity.test;
+package com.suissoft.model.app.partner.entity;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -16,9 +16,6 @@ import org.junit.Test;
 
 import com.google.inject.Guice;
 import com.suissoft.model.app.partner.dao.JuristicPersonDao;
-import com.suissoft.model.app.partner.entity.Address;
-import com.suissoft.model.app.partner.entity.ContactInfoType;
-import com.suissoft.model.app.partner.entity.JuristicPerson;
 import com.suissoft.model.entity.Entity;
 import com.suissoft.model.persistence.Dao;
 import com.suissoft.model.persistence.PersistenceModule;
@@ -101,6 +98,11 @@ public class JuristicPersonDaoTest {
 	@Test(expected = NullPointerException.class)
 	public void shouldFailToSearchByNullSearchTerms() {
 		daoJuristicPersonExt.findBySearchTerms(null);
+	}
+	
+	@Test
+	public void shouldInjectContactTypeDao() {
+		assertNotNull("daoContactType should not be null", daoContactType);
 	}
 
 	private List<String> buildSearchTerms(String ...parts) {

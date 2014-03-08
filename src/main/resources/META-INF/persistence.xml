@@ -31,7 +31,6 @@
 		<class>com.suissoft.model.app.product.entity.ProductCategory</class>
 		<class>com.suissoft.model.app.product.entity.Quote</class>
 		
-
         <properties>
 			<property name="javax.persistence.jdbc.driver" value="org.h2.Driver" />
 			<property name="javax.persistence.jdbc.url" value="jdbc:h2:mem:test;DB_CLOSE_DELAY=-1" />
@@ -67,9 +66,7 @@
 		<class>com.suissoft.model.app.partner.entity.RelationshipType</class>
 		<class>com.suissoft.model.app.partner.entity.ServiceProvider</class>
 		<class>com.suissoft.model.app.partner.entity.Supplier</class>
-		
-		<class>com.suissoft.model.app.product.entity.Order</class>
-		
+
 		<class>com.suissoft.model.app.product.entity.Order</class>
 		<class>com.suissoft.model.app.product.entity.Product</class>
 		<class>com.suissoft.model.app.product.entity.ProductCategory</class>

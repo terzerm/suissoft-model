@@ -2,8 +2,10 @@ package com.suissoft.model.app.partner.dao.impl;
 
 import java.util.List;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.PersistenceUnit;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
@@ -12,9 +14,10 @@ import javax.persistence.criteria.Root;
 import com.suissoft.model.app.partner.dao.NaturalPersonDao;
 import com.suissoft.model.app.partner.entity.NaturalPerson;
 
-
+@ApplicationScoped
+@PersistenceUnit
 public class NaturalPersonDaoImpl extends AbstractPartnerDaoImpl<NaturalPerson> implements NaturalPersonDao {
-	
+
 	@Inject
 	public NaturalPersonDaoImpl(EntityManagerFactory entityManagerFactory) {
 		super(NaturalPerson.class, entityManagerFactory);

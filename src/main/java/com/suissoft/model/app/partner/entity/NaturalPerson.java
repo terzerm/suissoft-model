@@ -48,10 +48,12 @@ public class NaturalPerson extends Partner {
 	}
 	
 	@ManyToOne(optional=true)
+	@Override
 	public Client getClient() {
 		return client;
 	}
 	
+	@Override
 	public void setClient(Client client) {
 		this.client = client;
 	}

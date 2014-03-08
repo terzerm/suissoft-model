@@ -1,4 +1,4 @@
-package com.suissoft.model.app.partner.entity.test;
+package com.suissoft.model.app.partner.entity;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -22,11 +22,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import com.google.inject.Guice;
 import com.suissoft.model.app.partner.dao.NaturalPersonDao;
-import com.suissoft.model.app.partner.entity.Address;
-import com.suissoft.model.app.partner.entity.AddressType;
-import com.suissoft.model.app.partner.entity.ContactInfo;
-import com.suissoft.model.app.partner.entity.ContactInfoType;
-import com.suissoft.model.app.partner.entity.NaturalPerson;
 import com.suissoft.model.entity.Entity;
 import com.suissoft.model.persistence.Dao;
 import com.suissoft.model.persistence.PersistenceModule;
@@ -289,6 +284,11 @@ public class NaturalPersonDaoTest {
 		daoNaturalPersonExt.findBySearchTerms(null);
 	}
 	
+	@Test
+	public void shouldInjectContactTypeDao() {
+		assertNotNull("daoContactType should not be null", daoContactType);
+	}
+
 	private List<String> buildSearchTerms(String ...parts) {
 		List<String> result = new ArrayList<>();
 		for (String s: parts) {

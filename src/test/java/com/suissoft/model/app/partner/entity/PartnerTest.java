@@ -1,4 +1,4 @@
-package com.suissoft.model.app.partner.entity.test;
+package com.suissoft.model.app.partner.entity;
 
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
@@ -9,7 +9,7 @@ import org.junit.Test;
 import com.suissoft.model.app.partner.entity.JuristicPerson;
 import com.suissoft.model.app.partner.entity.NaturalPerson;
 import com.suissoft.model.app.partner.entity.Partner;
-import com.suissoft.model.persistence.test.AbstractPersistenceUnitTest;
+import com.suissoft.model.persistence.AbstractPersistenceUnitTest;
 
 /**
  * Unit test for {@link Partner}

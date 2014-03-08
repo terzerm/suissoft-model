@@ -1,4 +1,4 @@
-package com.suissoft.model.persistence.test;
+package com.suissoft.model.persistence;
 
 import static org.junit.Assert.assertNotNull;
 

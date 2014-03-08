@@ -43,11 +43,13 @@ public class JuristicPerson extends Partner {
 		this.name = name;
 	}
 	
+	@Override
 	@OneToOne
 	public Client getClient() {
 		return client;
 	}
 	
+	@Override
 	public void setClient(Client client) {
 		this.client = client;
 	}
