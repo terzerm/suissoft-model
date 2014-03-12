@@ -2,29 +2,21 @@ buildscript {
     repositories {
         mavenCentral()
     }
-    dependencies {
-        classpath "net.saliman:gradle-cobertura-plugin:2.2.4"
-    }
 }
-apply plugin: 'cobertura'
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'maven'
+apply plugin: 'jacoco'
 
 sourceCompatibility = 1.7
 
-version = "kandy-1.2"
+version = "1.3-SNAPSHOT"
 group = 'com.suissoft'
 
 jar {
     manifest {
         attributes 'Implementation-Title': 'suissoft-model', 'Implementation-Version': version
     }
-}
-
-cobertura {
-    coverageFormats=['html','xml']
-    auxiliaryClasspath += files("build/resources/main")
 }
 
 eclipse {
