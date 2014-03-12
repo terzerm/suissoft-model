@@ -9,7 +9,7 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import com.suissoft.model.app.partner.entity.Partner;
-import com.suissoft.model.persistence.EntityManagerDao;
+import com.suissoft.model.entity.dao.EntityManagerDao;
 
 public abstract class AbstractPartnerDaoImpl<E extends Partner> extends EntityManagerDao<E> {
 

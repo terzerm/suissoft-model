@@ -14,7 +14,7 @@ import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameter;
 import org.junit.runners.Parameterized.Parameters;
 
-import com.suissoft.model.persistence.PersistenceUnit;
+import com.suissoft.model.util.PersistenceUnit;
 
 
 /**

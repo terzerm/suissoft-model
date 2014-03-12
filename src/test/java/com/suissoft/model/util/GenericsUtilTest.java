@@ -14,7 +14,7 @@ import com.suissoft.model.app.partner.entity.JuristicPerson;
 import com.suissoft.model.app.partner.entity.NaturalPerson;
 import com.suissoft.model.app.partner.entity.Partner;
 import com.suissoft.model.entity.Entity;
-import com.suissoft.model.persistence.Dao;
+import com.suissoft.model.entity.dao.Dao;
 
 /**
  * Unit test for {@link GenericsUtil}

@@ -10,7 +10,7 @@ import javax.persistence.EntityManager;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.suissoft.model.persistence.PersistenceUnit;
+import com.suissoft.model.util.PersistenceUnit;
 
 /**
  * Unit test verifying the hibernate config.

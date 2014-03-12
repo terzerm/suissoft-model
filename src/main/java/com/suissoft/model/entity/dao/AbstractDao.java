@@ -1,4 +1,4 @@
-package com.suissoft.model.persistence;
+package com.suissoft.model.entity.dao;
 
 import static java.util.Objects.requireNonNull;
 

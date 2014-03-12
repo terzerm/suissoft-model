@@ -1,4 +1,4 @@
-package com.suissoft.model.app.partner.entity;
+package com.suissoft.model.app.partner.dao;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -13,27 +13,32 @@ import java.util.UUID;
 
 import javax.inject.Inject;
 
+import org.jglue.cdiunit.AdditionalClasses;
+import org.jglue.cdiunit.CdiRunner;
 import org.joda.time.LocalDate;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.runners.MockitoJUnitRunner;
 
-import com.google.inject.Guice;
-import com.suissoft.model.app.partner.dao.NaturalPersonDao;
+import com.suissoft.model.app.partner.dao.impl.JuristicPersonDaoImpl;
+import com.suissoft.model.app.partner.dao.impl.NaturalPersonDaoImpl;
+import com.suissoft.model.app.partner.entity.Address;
+import com.suissoft.model.app.partner.entity.AddressType;
+import com.suissoft.model.app.partner.entity.ContactInfo;
+import com.suissoft.model.app.partner.entity.ContactInfoType;
+import com.suissoft.model.app.partner.entity.NaturalPerson;
+import com.suissoft.model.cdi.DaoProducer;
+import com.suissoft.model.cdi.EntityManagerProducer;
 import com.suissoft.model.entity.Entity;
-import com.suissoft.model.persistence.Dao;
-import com.suissoft.model.persistence.PersistenceModule;
-import com.suissoft.model.persistence.PersistenceUnit;
+import com.suissoft.model.entity.dao.Dao;
 
 /**
  * Unit test for {@link Dao} for {@link NaturalPerson}
  */
-@RunWith(MockitoJUnitRunner.class)
+@RunWith(CdiRunner.class)
+@AdditionalClasses({EntityManagerProducer.class, DaoProducer.class, NaturalPersonDaoImpl.class, JuristicPersonDaoImpl.class})
 public class NaturalPersonDaoTest {
-	
-	private final PersistenceUnit unit = PersistenceUnit.H2_FILE;
 	
 	@Inject
 	private Dao<NaturalPerson> daoNaturalPerson;
@@ -58,9 +63,12 @@ public class NaturalPersonDaoTest {
 	@Before
 	public void beforeEach() {
 		toDelete = new ArrayList<>();
-		Guice.createInjector(new PersistenceModule(unit)).injectMembers(this);
 		assertNotNull("daoNaturalPerson should have been injected", daoNaturalPerson);
+		assertNotNull("daoNaturalPersonExt should have been injected", daoNaturalPersonExt);
 		assertNotNull("daoAddress should have been injected", daoAddress);
+		assertNotNull("daoContactType should have been injected", daoContactType);
+		assertNotNull("daoAddressType should have been injected", daoAddressType);
+		assertNotNull("daoContactInfoType should have been injected", daoContactInfoType);
 	}
 	
 	@After

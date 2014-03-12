@@ -15,8 +15,8 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceUnit;
 
 import com.suissoft.model.entity.Entity;
-import com.suissoft.model.persistence.Dao;
-import com.suissoft.model.persistence.EntityManagerDao;
+import com.suissoft.model.entity.dao.Dao;
+import com.suissoft.model.entity.dao.EntityManagerDao;
 import com.suissoft.model.util.GenericsUtil;
 
 /**

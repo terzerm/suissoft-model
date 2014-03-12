@@ -1,4 +1,4 @@
-package com.suissoft.model.app.partner.entity;
+package com.suissoft.model.app.partner.dao;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -10,21 +10,27 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import org.jglue.cdiunit.AdditionalClasses;
+import org.jglue.cdiunit.CdiRunner;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
-import com.google.inject.Guice;
-import com.suissoft.model.app.partner.dao.JuristicPersonDao;
+import com.suissoft.model.app.partner.dao.impl.JuristicPersonDaoImpl;
+import com.suissoft.model.app.partner.dao.impl.NaturalPersonDaoImpl;
+import com.suissoft.model.app.partner.entity.Address;
+import com.suissoft.model.app.partner.entity.ContactInfoType;
+import com.suissoft.model.app.partner.entity.JuristicPerson;
+import com.suissoft.model.cdi.DaoProducer;
+import com.suissoft.model.cdi.EntityManagerProducer;
 import com.suissoft.model.entity.Entity;
-import com.suissoft.model.persistence.Dao;
-import com.suissoft.model.persistence.PersistenceModule;
-import com.suissoft.model.persistence.PersistenceUnit;
+import com.suissoft.model.entity.dao.Dao;
 
+@RunWith(CdiRunner.class)
+@AdditionalClasses({EntityManagerProducer.class, DaoProducer.class, NaturalPersonDaoImpl.class, JuristicPersonDaoImpl.class})
 public class JuristicPersonDaoTest {
 
-	private final PersistenceUnit unit = PersistenceUnit.H2_FILE;
-	
 	@Inject
 	private Dao<JuristicPerson> daoJuristicPerson;
 
@@ -42,9 +48,10 @@ public class JuristicPersonDaoTest {
 	@Before
 	public void beforeEach() {
 		toDelete = new ArrayList<>();
-		Guice.createInjector(new PersistenceModule(unit)).injectMembers(this);
 		assertNotNull("daoJuristicPerson should have been injected", daoJuristicPerson);
+		assertNotNull("daoJuristicPersonExt should have been injected", daoJuristicPersonExt);
 		assertNotNull("daoAddress should have been injected", daoAddress);
+		assertNotNull("daoContactType should have been injected", daoContactType);
 
 		for (JuristicPerson juristicPerson: daoJuristicPerson.findAll()) {
 			daoJuristicPerson.delete(juristicPerson);

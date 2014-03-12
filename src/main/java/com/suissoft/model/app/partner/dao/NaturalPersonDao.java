@@ -3,7 +3,7 @@ package com.suissoft.model.app.partner.dao;
 import java.util.List;
 
 import com.suissoft.model.app.partner.entity.NaturalPerson;
-import com.suissoft.model.persistence.Dao;
+import com.suissoft.model.entity.dao.Dao;
 
 /**
  * Specialised DAO for {@link NaturalPerson}
