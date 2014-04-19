@@ -10,6 +10,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.suissoft.model.entity.AbstractEntity;
+import com.suissoft.model.entity.EntityVisitor;
 
 @Entity
 @Table(name="T_ADDRESS")
@@ -121,6 +122,10 @@ public class Address extends AbstractEntity {
 	
 	public void setAddressType(AddressType addressType) {
 		this.addressType = addressType;
+	}
+	
+	public <I, R> R accept(EntityVisitor<I, R> visitor, I input) {
+		return visitor.visitAddress(this, input);
 	}
 	
 }

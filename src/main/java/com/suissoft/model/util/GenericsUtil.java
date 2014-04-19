@@ -35,7 +35,7 @@ public class GenericsUtil {
 		final Map<Type, Type> resolvedTypes = new HashMap<Type, Type>();
 		return getTypeArgument(type, variable, resolvedTypes);
 	}
-	public static Class<?> getTypeArgument(final Type type, final TypeVariable<? extends GenericDeclaration> variable, Map<Type, Type> resolvedTypes) {
+	private static Class<?> getTypeArgument(final Type type, final TypeVariable<? extends GenericDeclaration> variable, Map<Type, Type> resolvedTypes) {
 		// start walking up the inheritance hierarchy until we hit the end
 		if (type instanceof Class) {
 			final Class<?> clazz = (Class<?>) type;

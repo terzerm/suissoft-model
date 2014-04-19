@@ -14,7 +14,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import com.suissoft.model.app.partner.PartnerVisitor;
 import com.suissoft.model.entity.AbstractEntity;
 
 @Entity
@@ -60,7 +59,6 @@ abstract public class Partner extends AbstractEntity {
 		addresses.add(address);
 	}
 	
-	abstract public <I,R> R accept(PartnerVisitor<I,R> visitor, I input);
 	@Transient
 	abstract public Client getClient();
 	@Transient

@@ -8,10 +8,14 @@ import javax.persistence.Table;
 
 import org.joda.time.LocalDate;
 
-import com.suissoft.model.app.partner.PartnerVisitor;
+import com.suissoft.model.app.partner.dao.NaturalPersonDao;
+import com.suissoft.model.app.partner.dao.impl.NaturalPersonDaoImpl;
+import com.suissoft.model.entity.EntityVisitor;
+import com.suissoft.model.entity.dao.UseDao;
 
 @Entity
 @Table(name="T_NATURAL_PERSON")
+@UseDao(type = NaturalPersonDao.class, impl = NaturalPersonDaoImpl.class)
 public class NaturalPerson extends Partner {
 	
 	private String lastName;
@@ -64,7 +68,7 @@ public class NaturalPerson extends Partner {
 	}
 	
 	@Override
-	public <I, R> R accept(PartnerVisitor<I, R> visitor, I input) {
+	public <I, R> R accept(EntityVisitor<I, R> visitor, I input) {
 		return visitor.visitNaturalPerson(this, input);
 	}
 	

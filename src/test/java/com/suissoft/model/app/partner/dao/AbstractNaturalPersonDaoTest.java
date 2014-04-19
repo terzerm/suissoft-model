@@ -13,32 +13,23 @@ import java.util.UUID;
 
 import javax.inject.Inject;
 
-import org.jglue.cdiunit.AdditionalClasses;
-import org.jglue.cdiunit.CdiRunner;
 import org.joda.time.LocalDate;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
-import com.suissoft.model.app.partner.dao.impl.JuristicPersonDaoImpl;
-import com.suissoft.model.app.partner.dao.impl.NaturalPersonDaoImpl;
 import com.suissoft.model.app.partner.entity.Address;
 import com.suissoft.model.app.partner.entity.AddressType;
 import com.suissoft.model.app.partner.entity.ContactInfo;
 import com.suissoft.model.app.partner.entity.ContactInfoType;
 import com.suissoft.model.app.partner.entity.NaturalPerson;
-import com.suissoft.model.cdi.DaoProducer;
-import com.suissoft.model.cdi.EntityManagerProducer;
 import com.suissoft.model.entity.Entity;
 import com.suissoft.model.entity.dao.Dao;
 
 /**
  * Unit test for {@link Dao} for {@link NaturalPerson}
  */
-@RunWith(CdiRunner.class)
-@AdditionalClasses({EntityManagerProducer.class, DaoProducer.class, NaturalPersonDaoImpl.class, JuristicPersonDaoImpl.class})
-public class NaturalPersonDaoTest {
+abstract public class AbstractNaturalPersonDaoTest {
 	
 	@Inject
 	private Dao<NaturalPerson> daoNaturalPerson;

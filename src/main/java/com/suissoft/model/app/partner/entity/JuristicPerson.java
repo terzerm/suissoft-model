@@ -6,13 +6,17 @@ import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import com.suissoft.model.app.partner.PartnerVisitor;
+import com.suissoft.model.app.partner.dao.JuristicPersonDao;
+import com.suissoft.model.app.partner.dao.impl.JuristicPersonDaoImpl;
+import com.suissoft.model.entity.EntityVisitor;
+import com.suissoft.model.entity.dao.UseDao;
 
 /**
  * Juristic person entity containing the objects that make up the data of a juristic person.
  */
 @Entity
 @Table(name="T_JURISTIC_PERSON")
+@UseDao(type = JuristicPersonDao.class, impl = JuristicPersonDaoImpl.class)
 public class JuristicPerson extends Partner {
 	private String name;
 
@@ -96,7 +100,7 @@ public class JuristicPerson extends Partner {
 	}
 	
 	@Override
-	public <I, R> R accept(PartnerVisitor<I, R> visitor, I input) {
+	public <I, R> R accept(EntityVisitor<I, R> visitor, I input) {
 		return visitor.visitJuristicPerson(this, input);
 	}
 }

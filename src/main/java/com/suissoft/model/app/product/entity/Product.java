@@ -7,6 +7,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.suissoft.model.entity.AbstractEntity;
+import com.suissoft.model.entity.EntityVisitor;
 
 @Entity
 @Table(name="T_PRODUCT")
@@ -28,5 +29,9 @@ public class Product extends AbstractEntity {
 	
 	public void setProductCategory(ProductCategory productCategory) {
 		this.productCategory = productCategory;
+	}
+	
+	public <I, R> R accept(EntityVisitor<I, R> visitor, I input) {
+		return visitor.visitProduct(this, input);
 	}
 }

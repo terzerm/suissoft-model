@@ -12,6 +12,7 @@ import javax.persistence.Table;
 
 import com.suissoft.model.app.product.entity.Order;
 import com.suissoft.model.entity.AbstractEntity;
+import com.suissoft.model.entity.EntityVisitor;
 
 @Entity
 @Table(name="T_CLIENT")
@@ -35,4 +36,7 @@ public class Client extends AbstractEntity {
 		this.orders = orders;
 	}
 
+	public <I, R> R accept(EntityVisitor<I, R> visitor, I input) {
+		return visitor.visitClient(this, input);
+	}
 }

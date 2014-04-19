@@ -7,6 +7,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.suissoft.model.entity.AbstractEntity;
+import com.suissoft.model.entity.EntityVisitor;
 
 @Entity
 @Table(name="T_RELATIONSHIP")
@@ -49,5 +50,9 @@ public class Relationship extends AbstractEntity {
 	
 	public void setPartnerTo(Partner partnerTo) {
 		this.partnerTo = partnerTo;
+	}
+	
+	public <I, R> R accept(EntityVisitor<I, R> visitor, I input) {
+		return visitor.visitRelationship(this, input);
 	}
 }

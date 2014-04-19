@@ -7,6 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import com.suissoft.model.entity.AbstractEntity;
+import com.suissoft.model.entity.EntityVisitor;
 
 @Entity
 @Table(name="T_COUNTRY")
@@ -41,5 +42,8 @@ public class Country extends AbstractEntity {
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+	public <I, R> R accept(EntityVisitor<I, R> visitor, I input) {
+		return visitor.visitCountry(this, input);
 	}
 }

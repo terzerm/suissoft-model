@@ -7,6 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import com.suissoft.model.entity.AbstractEntity;
+import com.suissoft.model.entity.EntityVisitor;
 
 @Entity
 @Table(name="T_CONTACT_INFO_TYPE")
@@ -39,4 +40,9 @@ public class ContactInfoType extends AbstractEntity {
 	public void setAccessCode(String accessCode) {
 		this.accessCode = accessCode;
 	}
+	
+	public <I, R> R accept(EntityVisitor<I, R> visitor, I input) {
+		return visitor.visitContactInfoType(this, input);
+	}
+	
 }

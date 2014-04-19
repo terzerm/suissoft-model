@@ -10,6 +10,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.suissoft.model.entity.AbstractEntity;
+import com.suissoft.model.entity.EntityVisitor;
 
 @Entity
 @Table(name="T_CONTACT_INFO")
@@ -52,5 +53,9 @@ public class ContactInfo extends AbstractEntity {
 
 	public void setContactInfoType(ContactInfoType contactInfoType) {
 		this.contactInfoType = contactInfoType;
+	}
+	
+	public <I, R> R accept(EntityVisitor<I, R> visitor, I input) {
+		return visitor.visitContatInfo(this, input);
 	}
 }

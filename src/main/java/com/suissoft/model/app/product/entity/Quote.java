@@ -8,6 +8,7 @@ import javax.persistence.Table;
 
 import com.suissoft.model.app.partner.entity.Carrier;
 import com.suissoft.model.entity.AbstractEntity;
+import com.suissoft.model.entity.EntityVisitor;
 
 @Entity
 @Table(name="T_QUOTE")
@@ -66,6 +67,10 @@ public class Quote extends AbstractEntity {
 	
 	public void setPrice(Double price) {
 		this.price = price;
+	}
+	
+	public <I, R> R accept(EntityVisitor<I, R> visitor, I input) {
+		return visitor.visitQuote(this, input);
 	}
 
 }
