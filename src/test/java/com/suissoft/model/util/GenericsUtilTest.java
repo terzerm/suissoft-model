@@ -5,16 +5,16 @@ import static org.junit.Assert.assertNull;
 
 import org.junit.Test;
 
-import com.suissoft.model.app.partner.dao.JuristicPersonDao;
-import com.suissoft.model.app.partner.dao.NaturalPersonDao;
-import com.suissoft.model.app.partner.dao.impl.JuristicPersonDaoImpl;
-import com.suissoft.model.app.partner.dao.impl.NaturalPersonDaoImpl;
-import com.suissoft.model.app.partner.entity.Country;
-import com.suissoft.model.app.partner.entity.JuristicPerson;
-import com.suissoft.model.app.partner.entity.NaturalPerson;
-import com.suissoft.model.app.partner.entity.Partner;
+import com.suissoft.model.dao.Dao;
+import com.suissoft.model.dao.partner.JuristicPersonDao;
+import com.suissoft.model.dao.partner.JuristicPersonDaoImpl;
+import com.suissoft.model.dao.partner.NaturalPersonDao;
+import com.suissoft.model.dao.partner.NaturalPersonDaoImpl;
 import com.suissoft.model.entity.Entity;
-import com.suissoft.model.entity.dao.Dao;
+import com.suissoft.model.entity.partner.Country;
+import com.suissoft.model.entity.partner.JuristicPerson;
+import com.suissoft.model.entity.partner.NaturalPerson;
+import com.suissoft.model.entity.partner.Partner;
 
 /**
  * Unit test for {@link GenericsUtil}

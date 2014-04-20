@@ -6,7 +6,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import com.suissoft.model.app.partner.entity.NaturalPerson;
+import com.suissoft.model.entity.partner.NaturalPerson;
 
 public class AbstractEntityTest {
 

@@ -9,27 +9,27 @@
 
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 
-		<class>com.suissoft.model.app.partner.entity.Address</class>
-		<class>com.suissoft.model.app.partner.entity.AddressType</class>
-		<class>com.suissoft.model.app.partner.entity.Carrier</class>
-		<class>com.suissoft.model.app.partner.entity.Client</class>
-		<class>com.suissoft.model.app.partner.entity.ContactInfo</class>
-		<class>com.suissoft.model.app.partner.entity.ContactInfoType</class>
-		<class>com.suissoft.model.app.partner.entity.Country</class>
-		<class>com.suissoft.model.app.partner.entity.JuristicPerson</class>
-		<class>com.suissoft.model.app.partner.entity.NaturalPerson</class>
-		<class>com.suissoft.model.app.partner.entity.OwnCompany</class>
-		<class>com.suissoft.model.app.partner.entity.OwnEmployee</class>
-		<class>com.suissoft.model.app.partner.entity.Partner</class>
-		<class>com.suissoft.model.app.partner.entity.Relationship</class>
-		<class>com.suissoft.model.app.partner.entity.RelationshipType</class>
-		<class>com.suissoft.model.app.partner.entity.ServiceProvider</class>
-		<class>com.suissoft.model.app.partner.entity.Supplier</class>
+		<class>com.suissoft.model.entity.partner.Address</class>
+		<class>com.suissoft.model.entity.partner.AddressType</class>
+		<class>com.suissoft.model.entity.partner.Carrier</class>
+		<class>com.suissoft.model.entity.partner.Client</class>
+		<class>com.suissoft.model.entity.partner.ContactInfo</class>
+		<class>com.suissoft.model.entity.partner.ContactInfoType</class>
+		<class>com.suissoft.model.entity.partner.Country</class>
+		<class>com.suissoft.model.entity.partner.JuristicPerson</class>
+		<class>com.suissoft.model.entity.partner.NaturalPerson</class>
+		<class>com.suissoft.model.entity.partner.OwnCompany</class>
+		<class>com.suissoft.model.entity.partner.OwnEmployee</class>
+		<class>com.suissoft.model.entity.partner.Partner</class>
+		<class>com.suissoft.model.entity.partner.Relationship</class>
+		<class>com.suissoft.model.entity.partner.RelationshipType</class>
+		<class>com.suissoft.model.entity.partner.ServiceProvider</class>
+		<class>com.suissoft.model.entity.partner.Supplier</class>
 		
-		<class>com.suissoft.model.app.product.entity.Order</class>
-		<class>com.suissoft.model.app.product.entity.Product</class>
-		<class>com.suissoft.model.app.product.entity.ProductCategory</class>
-		<class>com.suissoft.model.app.product.entity.Quote</class>
+		<class>com.suissoft.model.entity.product.Order</class>
+		<class>com.suissoft.model.entity.product.Product</class>
+		<class>com.suissoft.model.entity.product.ProductCategory</class>
+		<class>com.suissoft.model.entity.product.Quote</class>
 		
         <properties>
 			<property name="javax.persistence.jdbc.driver" value="org.h2.Driver" />
@@ -50,27 +50,27 @@
 
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 
-		<class>com.suissoft.model.app.partner.entity.Address</class>
-		<class>com.suissoft.model.app.partner.entity.AddressType</class>
-		<class>com.suissoft.model.app.partner.entity.Carrier</class>
-		<class>com.suissoft.model.app.partner.entity.Client</class>
-		<class>com.suissoft.model.app.partner.entity.ContactInfo</class>
-		<class>com.suissoft.model.app.partner.entity.ContactInfoType</class>
-		<class>com.suissoft.model.app.partner.entity.Country</class>
-		<class>com.suissoft.model.app.partner.entity.JuristicPerson</class>
-		<class>com.suissoft.model.app.partner.entity.NaturalPerson</class>
-		<class>com.suissoft.model.app.partner.entity.OwnCompany</class>
-		<class>com.suissoft.model.app.partner.entity.OwnEmployee</class>
-		<class>com.suissoft.model.app.partner.entity.Partner</class>
-		<class>com.suissoft.model.app.partner.entity.Relationship</class>
-		<class>com.suissoft.model.app.partner.entity.RelationshipType</class>
-		<class>com.suissoft.model.app.partner.entity.ServiceProvider</class>
-		<class>com.suissoft.model.app.partner.entity.Supplier</class>
+		<class>com.suissoft.model.entity.partner.Address</class>
+		<class>com.suissoft.model.entity.partner.AddressType</class>
+		<class>com.suissoft.model.entity.partner.Carrier</class>
+		<class>com.suissoft.model.entity.partner.Client</class>
+		<class>com.suissoft.model.entity.partner.ContactInfo</class>
+		<class>com.suissoft.model.entity.partner.ContactInfoType</class>
+		<class>com.suissoft.model.entity.partner.Country</class>
+		<class>com.suissoft.model.entity.partner.JuristicPerson</class>
+		<class>com.suissoft.model.entity.partner.NaturalPerson</class>
+		<class>com.suissoft.model.entity.partner.OwnCompany</class>
+		<class>com.suissoft.model.entity.partner.OwnEmployee</class>
+		<class>com.suissoft.model.entity.partner.Partner</class>
+		<class>com.suissoft.model.entity.partner.Relationship</class>
+		<class>com.suissoft.model.entity.partner.RelationshipType</class>
+		<class>com.suissoft.model.entity.partner.ServiceProvider</class>
+		<class>com.suissoft.model.entity.partner.Supplier</class>
 
-		<class>com.suissoft.model.app.product.entity.Order</class>
-		<class>com.suissoft.model.app.product.entity.Product</class>
-		<class>com.suissoft.model.app.product.entity.ProductCategory</class>
-		<class>com.suissoft.model.app.product.entity.Quote</class>
+		<class>com.suissoft.model.entity.product.Order</class>
+		<class>com.suissoft.model.entity.product.Product</class>
+		<class>com.suissoft.model.entity.product.ProductCategory</class>
+		<class>com.suissoft.model.entity.product.Quote</class>
 
         <properties>
 			<property name="javax.persistence.jdbc.driver" value="org.h2.Driver" />

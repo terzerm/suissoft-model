@@ -12,25 +12,25 @@ import java.util.Objects;
 
 import org.junit.Test;
 
-import com.suissoft.model.app.partner.entity.Address;
-import com.suissoft.model.app.partner.entity.AddressType;
-import com.suissoft.model.app.partner.entity.Carrier;
-import com.suissoft.model.app.partner.entity.Client;
-import com.suissoft.model.app.partner.entity.ContactInfo;
-import com.suissoft.model.app.partner.entity.ContactInfoType;
-import com.suissoft.model.app.partner.entity.Country;
-import com.suissoft.model.app.partner.entity.JuristicPerson;
-import com.suissoft.model.app.partner.entity.NaturalPerson;
-import com.suissoft.model.app.partner.entity.OwnCompany;
-import com.suissoft.model.app.partner.entity.OwnEmployee;
-import com.suissoft.model.app.partner.entity.Relationship;
-import com.suissoft.model.app.partner.entity.RelationshipType;
-import com.suissoft.model.app.partner.entity.ServiceProvider;
-import com.suissoft.model.app.partner.entity.Supplier;
-import com.suissoft.model.app.product.entity.Order;
-import com.suissoft.model.app.product.entity.Product;
-import com.suissoft.model.app.product.entity.ProductCategory;
-import com.suissoft.model.app.product.entity.Quote;
+import com.suissoft.model.entity.partner.Address;
+import com.suissoft.model.entity.partner.AddressType;
+import com.suissoft.model.entity.partner.Carrier;
+import com.suissoft.model.entity.partner.Client;
+import com.suissoft.model.entity.partner.ContactInfo;
+import com.suissoft.model.entity.partner.ContactInfoType;
+import com.suissoft.model.entity.partner.Country;
+import com.suissoft.model.entity.partner.JuristicPerson;
+import com.suissoft.model.entity.partner.NaturalPerson;
+import com.suissoft.model.entity.partner.OwnCompany;
+import com.suissoft.model.entity.partner.OwnEmployee;
+import com.suissoft.model.entity.partner.Relationship;
+import com.suissoft.model.entity.partner.RelationshipType;
+import com.suissoft.model.entity.partner.ServiceProvider;
+import com.suissoft.model.entity.partner.Supplier;
+import com.suissoft.model.entity.product.Order;
+import com.suissoft.model.entity.product.Product;
+import com.suissoft.model.entity.product.ProductCategory;
+import com.suissoft.model.entity.product.Quote;
 
 public class EntityVisitorTest {
 
