@@ -21,8 +21,8 @@ public class End extends AbstractFlowElement implements Target {
 	}
 	
 	public <I, R> R accept(EntityVisitor<I, R> visitor, I input) {
-		// TODO Auto-generated method stub
-		return null;
+		//FIXME impl
+		throw new RuntimeException("not implemented");
 	}
 
 }

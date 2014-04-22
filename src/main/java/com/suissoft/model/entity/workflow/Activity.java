@@ -45,7 +45,7 @@ public class Activity extends Node {
 	}
 	
 	public <I, R> R accept(EntityVisitor<I, R> visitor, I input) {
-		//TODO impl
+		//FIXME impl
 		throw new RuntimeException("not implemented");
 	}
 
