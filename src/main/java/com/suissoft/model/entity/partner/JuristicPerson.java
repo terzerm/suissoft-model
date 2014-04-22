@@ -12,10 +12,11 @@ import com.suissoft.model.dao.partner.JuristicPersonDaoImpl;
 import com.suissoft.model.entity.EntityVisitor;
 
 /**
- * Juristic person entity containing the objects that make up the data of a juristic person.
+ * Juristic person entity containing the objects that make up the data of a
+ * juristic person.
  */
 @Entity
-@Table(name="T_JURISTIC_PERSON")
+@Table(name = "T_JURISTIC_PERSON")
 @UseDao(type = JuristicPersonDao.class, impl = JuristicPersonDaoImpl.class)
 public class JuristicPerson extends Partner {
 	private String name;
@@ -26,79 +27,83 @@ public class JuristicPerson extends Partner {
 	private ServiceProvider serviceProvider;
 	private OwnCompany ownCompany;
 	private OwnEmployee ownEmployee;
-	
+
 	/**
 	 * Returns the juristic person's name
+	 * 
 	 * @return the name of this juristic person
 	 */
 	@Column(length = 64, nullable = false)
 	public String getName() {
 		return name;
 	}
+
 	/**
 	 * Set the juristic person's name
-	 * @param name the name of this juristic person
+	 * 
+	 * @param name
+	 *            the name of this juristic person
 	 */
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 	@Override
 	@OneToOne
 	public Client getClient() {
 		return client;
 	}
-	
+
 	@Override
 	public void setClient(Client client) {
 		this.client = client;
 	}
-	
+
 	@OneToOne
 	public Supplier getSupplier() {
 		return supplier;
 	}
-	
+
 	public void setSupplier(Supplier supplier) {
 		this.supplier = supplier;
 	}
-	
-	@OneToOne(cascade=CascadeType.ALL)
+
+	@OneToOne(cascade = CascadeType.ALL)
 	public Carrier getCarrier() {
 		return carrier;
 	}
-	
+
 	public void setCarrier(Carrier carrier) {
 		this.carrier = carrier;
 	}
-	
+
 	@OneToOne
 	public ServiceProvider getServiceProvider() {
 		return serviceProvider;
 	}
-	
+
 	public void setServiceProvider(ServiceProvider serviceProvider) {
 		this.serviceProvider = serviceProvider;
 	}
-	
+
 	@OneToOne
 	public OwnCompany getOwnCompany() {
 		return ownCompany;
 	}
-	
+
 	public void setOwnCompany(OwnCompany ownCompany) {
 		this.ownCompany = ownCompany;
 	}
-	
+
 	@OneToOne
 	public OwnEmployee getOwnEmployee() {
 		return ownEmployee;
 	}
-	
+
 	public void setOwnEmployee(OwnEmployee ownEmployee) {
 		this.ownEmployee = ownEmployee;
 	}
-	
+
 	@Override
 	public <I, R> R accept(EntityVisitor<I, R> visitor, I input) {
 		return visitor.visitJuristicPerson(this, input);

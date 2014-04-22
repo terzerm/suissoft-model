@@ -61,6 +61,7 @@ public interface Dao<E extends Entity> {
 	 * 
 	 * @param id
 	 *            the ID (aka primary key) of the entity to delete
+	 * @return true if the entity was deleted and false if no such entity exists
 	 */
 	boolean delete(long id);
 

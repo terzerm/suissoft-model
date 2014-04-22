@@ -25,7 +25,8 @@ import com.suissoft.model.util.GenericsUtil;
 @ApplicationScoped
 @PersistenceUnit
 @Alternative
-@Priority(javax.interceptor.Interceptor.Priority.APPLICATION) //activates alternative
+@Priority(javax.interceptor.Interceptor.Priority.APPLICATION)
+//activates alternative
 public class DaoProducer {
 
 	@Inject
@@ -41,6 +42,8 @@ public class DaoProducer {
 	 * 
 	 * @param injectionPoint
 	 *            meta data about the Dao injection point
+	 * @param <E>
+	 *            type of entity for returned Dao
 	 * @return a new Dao instance for the appropriate entity type
 	 * @throws DefinitionException
 	 *             if the entity type cannot be evaluated

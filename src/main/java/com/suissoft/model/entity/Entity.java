@@ -10,13 +10,19 @@ public interface Entity {
 	 * @return the ID or primary key
 	 */
 	long getId();
-	
+
 	/**
 	 * Accept method for visitor calling back into visitor passing this entity
 	 * as argument. The best matching visit method of the visitor is called.
 	 * 
-	 * @param visitor	the visitor to callback
-	 * @param input		the input to pass to the visit method of the visitor
+	 * @param visitor
+	 *            the visitor to callback
+	 * @param input
+	 *            the input to pass to the visit method of the visitor
+	 * @param <I>
+	 *            the input type
+	 * @param <R>
+	 *            the return value type
 	 * @return the result returned by the visit method of the visitor
 	 */
 	<I, R> R accept(EntityVisitor<I, R> visitor, I input);

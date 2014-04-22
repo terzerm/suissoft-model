@@ -19,7 +19,8 @@ public class Partition extends AbstractFlowElement {
 	}
 	
 	public <I, R> R accept(EntityVisitor<I, R> visitor, I input) {
-		return visitor.visitPartition(this, input);
+		//FIXME impl
+		throw new RuntimeException("not implemented");
 	}
 
 }
