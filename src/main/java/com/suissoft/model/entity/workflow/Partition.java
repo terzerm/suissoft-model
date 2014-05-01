@@ -5,11 +5,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import com.suissoft.model.entity.EntityVisitor;
+import com.suissoft.model.visitor.EntityVisitor;
 
 @Entity
 @Table(name="T_PARTITION")
-public class Partition extends AbstractFlowElement {
+public class Partition extends WorkflowElement {
 
 	@Id
 	@GeneratedValue
@@ -19,8 +19,7 @@ public class Partition extends AbstractFlowElement {
 	}
 	
 	public <I, R> R accept(EntityVisitor<I, R> visitor, I input) {
-		//FIXME impl
-		throw new RuntimeException("not implemented");
+		return visitor.visitPartition(this, input);
 	}
 
 }

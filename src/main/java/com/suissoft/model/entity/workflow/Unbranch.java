@@ -9,7 +9,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 @Embeddable
-abstract public class Unbranch extends AbstractFlowElement implements Junction, Source {
+abstract public class Unbranch extends WorkflowElement implements Junction, Source {
 
 	private List<Source> sources;
 	private Target target;

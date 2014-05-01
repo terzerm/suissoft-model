@@ -5,15 +5,21 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.suissoft.model.visitor.EntityVisitor;
+
 @Entity
 @Table(name="T_MERGE")
-abstract public class Merge extends Unbranch {
+public class Merge extends Unbranch {
 
 	@Id
 	@GeneratedValue
 	@Override
 	public long getId() {
 		return super.getId();
+	}
+
+	public <I, R> R accept(EntityVisitor<I, R> visitor, I input) {
+		return visitor.visitMerge(this, input);
 	}
 	
 }

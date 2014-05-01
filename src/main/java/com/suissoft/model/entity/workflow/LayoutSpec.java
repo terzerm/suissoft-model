@@ -9,7 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import com.suissoft.model.entity.AbstractEntity;
-import com.suissoft.model.entity.EntityVisitor;
+import com.suissoft.model.visitor.EntityVisitor;
 
 public class LayoutSpec extends AbstractEntity {
 
@@ -43,8 +43,7 @@ public class LayoutSpec extends AbstractEntity {
 	}
 	
 	public <I, R> R accept(EntityVisitor<I, R> visitor, I input) {
-		//FIXME impl
-		throw new RuntimeException("not implemented");
+		return visitor.visitLayoutSpec(this, input);
 	}
 
 }

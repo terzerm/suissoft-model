@@ -9,7 +9,7 @@ import javax.persistence.Table;
 import com.suissoft.model.dao.UseDao;
 import com.suissoft.model.dao.partner.JuristicPersonDao;
 import com.suissoft.model.dao.partner.JuristicPersonDaoImpl;
-import com.suissoft.model.entity.EntityVisitor;
+import com.suissoft.model.visitor.EntityVisitor;
 
 /**
  * Juristic person entity containing the objects that make up the data of a

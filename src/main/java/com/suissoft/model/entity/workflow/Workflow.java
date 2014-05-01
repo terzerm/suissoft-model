@@ -10,13 +10,13 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.suissoft.model.entity.EntityVisitor;
+import com.suissoft.model.visitor.EntityVisitor;
 
 @Entity
 @Table(name="T_WORKFLOW")
 public class Workflow extends Node {
 
-	private List<Activity> activities;
+	private List<WorkflowElement> elements;
 
 	@Id
 	@GeneratedValue
@@ -25,23 +25,22 @@ public class Workflow extends Node {
 		return super.getId();
 	}
 	
-	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="owner", orphanRemoval=true)
-	public List<Activity> getActivities() {
-		return activities;
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="workflow", orphanRemoval=true)
+	public List<WorkflowElement> getElements() {
+		return elements;
 	}
 	
-	public void setActivities(List<Activity> activities) {
-		this.activities = activities;
+	public void setElements(List<WorkflowElement> elements) {
+		this.elements = elements;
 	}
 	
-	public void addActivity(Activity activity) {
-		activity.setOwner(this);
-		activities.add(activity);
+	public void addElement(WorkflowElement element) {
+		element.setWorkflow(this);
+		elements.add(element);
 	}
 	
 	public <I, R> R accept(EntityVisitor<I, R> visitor, I input) {
-		//FIXME impl
-		throw new RuntimeException("not implemented");
+		return visitor.visitWorkflow(this, input);
 	}
 
 }

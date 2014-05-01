@@ -1,9 +1,7 @@
-package com.suissoft.model.entity;
+package com.suissoft.model.visitor;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
 
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,6 +10,7 @@ import java.util.Objects;
 
 import org.junit.Test;
 
+import com.suissoft.model.entity.Entity;
 import com.suissoft.model.entity.partner.Address;
 import com.suissoft.model.entity.partner.AddressType;
 import com.suissoft.model.entity.partner.Carrier;
@@ -27,14 +26,10 @@ import com.suissoft.model.entity.partner.Relationship;
 import com.suissoft.model.entity.partner.RelationshipType;
 import com.suissoft.model.entity.partner.ServiceProvider;
 import com.suissoft.model.entity.partner.Supplier;
-import com.suissoft.model.entity.product.Order;
-import com.suissoft.model.entity.product.Product;
-import com.suissoft.model.entity.product.ProductCategory;
-import com.suissoft.model.entity.product.Quote;
 
-public class EntityVisitorTest {
+public class PartnerVisitorTest {
 
-	private static class TestVisitor implements EntityVisitor<Integer, String> {
+	private static class TestVisitor implements PartnerVisitor<Integer, String> {
 
 		private Map<Class<?>, List<Object>> entityByType = new HashMap<Class<?>, List<Object>>();
 
@@ -94,28 +89,12 @@ public class EntityVisitorTest {
 			return visit(naturalPerson, input);
 		}
 
-		public String visitOrder(Order order, Integer input) {
-			return visit(order, input);
-		}
-
 		public String visitOwnCompany(OwnCompany ownCompany, Integer input) {
 			return visit(ownCompany, input);
 		}
 
 		public String visitOwnEmployee(OwnEmployee ownEmployee, Integer input) {
 			return visit(ownEmployee, input);
-		}
-
-		public String visitProduct(Product product, Integer input) {
-			return visit(product, input);
-		}
-
-		public String visitProductCategory(ProductCategory productCategory, Integer input) {
-			return visit(productCategory, input);
-		}
-
-		public String visitQuote(Quote quote, Integer input) {
-			return visit(quote, input);
 		}
 
 		public String visitRelationship(Relationship relationship, Integer input) {
@@ -135,13 +114,12 @@ public class EntityVisitorTest {
 		}
 	}
 
-	public static final Entity[] ENTITIES = new Entity[] { new Address(), new AddressType(), new Carrier(), new Client(), new ContactInfo(), new ContactInfoType(), new Country(), new Order(), new OwnCompany(), new OwnEmployee(), new NaturalPerson(), new JuristicPerson(), new Product(), new ProductCategory(), new Quote(), new Relationship(), new RelationshipType(), new ServiceProvider(), new Supplier() };
+	private static final Entity[] ENTITIES = new Entity[] { new Address(), new AddressType(), new Carrier(), new Client(), new ContactInfo(), new ContactInfoType(), new Country(), new OwnCompany(), new OwnEmployee(), new NaturalPerson(), new JuristicPerson(), new Relationship(), new RelationshipType(), new ServiceProvider(), new Supplier() };
 
 	@Test
 	public void shouldVisitForEveryEntityOnce() {
 		//given
 		final TestVisitor sharedVisitor = new TestVisitor();
-		final EntityVisitorAdapter<Integer, String> adapterVisitor = new EntityVisitorAdapter<>();
 
 		for (int i = 0; i < ENTITIES.length; i++) {
 			//given
@@ -150,29 +128,17 @@ public class EntityVisitorTest {
 			//when
 			final String result1 = ENTITIES[i].accept(sharedVisitor, i);
 			final String result2 = ENTITIES[i].accept(individualVisitor, i * i);
-			final String result3 = ENTITIES[i].accept(adapterVisitor, i * i * i);
 
 			//then
-			assertEquals(1, sharedVisitor.getCountFor(ENTITIES[i].getClass()));
-			assertEquals(1, individualVisitor.getCountFor(ENTITIES[i].getClass()));
-			assertEquals(1, individualVisitor.getEntityTypeCount());
-			assertEquals(String.valueOf(i), result1);
-			assertEquals(String.valueOf(i * i), result2);
-			assertNull(result3);
+			assertEquals(ENTITIES[i].toString(), 1, sharedVisitor.getCountFor(ENTITIES[i].getClass()));
+			assertEquals(ENTITIES[i].toString(), 1, individualVisitor.getCountFor(ENTITIES[i].getClass()));
+			assertEquals(ENTITIES[i].toString(), 1, individualVisitor.getEntityTypeCount());
+			assertEquals(ENTITIES[i].toString(), String.valueOf(i), result1);
+			assertEquals(ENTITIES[i].toString(), String.valueOf(i * i), result2);
 		}
 
 		//then
-		assertEquals(getVisitMethodCount(), sharedVisitor.getEntityTypeCount());
-	}
-
-	private int getVisitMethodCount() {
-		int count = 0;
-		for (final Method method : EntityVisitor.class.getMethods()) {
-			if (method.getName().startsWith("visit")) {
-				count++;
-			}
-		}
-		return count;
+		assertEquals(EntityVisitorTest.getVisitMethodCount(PartnerVisitor.class), sharedVisitor.getEntityTypeCount());
 	}
 
 }

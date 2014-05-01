@@ -11,7 +11,7 @@ import org.joda.time.LocalDate;
 import com.suissoft.model.dao.UseDao;
 import com.suissoft.model.dao.partner.NaturalPersonDao;
 import com.suissoft.model.dao.partner.NaturalPersonDaoImpl;
-import com.suissoft.model.entity.EntityVisitor;
+import com.suissoft.model.visitor.EntityVisitor;
 
 @Entity
 @Table(name="T_NATURAL_PERSON")

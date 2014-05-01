@@ -4,7 +4,7 @@ import javax.persistence.Embeddable;
 import javax.persistence.OneToOne;
 
 @Embeddable
-abstract public class Node extends AbstractFlowElement implements Source, Target {
+abstract public class Node extends WorkflowElement implements Source, Target {
 	
 	private Source source;
 	private Target target;

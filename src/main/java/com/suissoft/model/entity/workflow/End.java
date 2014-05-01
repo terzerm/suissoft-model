@@ -2,10 +2,10 @@ package com.suissoft.model.entity.workflow;
 
 import javax.persistence.OneToOne;
 
-import com.suissoft.model.entity.EntityVisitor;
+import com.suissoft.model.visitor.EntityVisitor;
 
 
-public class End extends AbstractFlowElement implements Target {
+public class End extends WorkflowElement implements Target {
 
 	private Source source;
 	
@@ -21,8 +21,7 @@ public class End extends AbstractFlowElement implements Target {
 	}
 	
 	public <I, R> R accept(EntityVisitor<I, R> visitor, I input) {
-		//FIXME impl
-		throw new RuntimeException("not implemented");
+		return visitor.visitEnd(this, input);
 	}
 
 }

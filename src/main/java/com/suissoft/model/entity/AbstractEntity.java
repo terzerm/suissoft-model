@@ -42,5 +42,4 @@ abstract public class AbstractEntity implements Entity {
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
 	}
-
 }
