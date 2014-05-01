@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Random;
 
 import org.junit.Test;
 
@@ -28,6 +29,8 @@ import com.suissoft.model.entity.partner.ServiceProvider;
 import com.suissoft.model.entity.partner.Supplier;
 
 public class PartnerVisitorTest {
+
+	static final Entity[] ENTITIES = { new Address(), new AddressType(), new Carrier(), new Client(), new ContactInfo(), new ContactInfoType(), new Country(), new OwnCompany(), new OwnEmployee(), new NaturalPerson(), new JuristicPerson(), new Relationship(), new RelationshipType(), new ServiceProvider(), new Supplier() };
 
 	private static class TestVisitor implements PartnerVisitor<Integer, String> {
 
@@ -114,31 +117,34 @@ public class PartnerVisitorTest {
 		}
 	}
 
-	private static final Entity[] ENTITIES = new Entity[] { new Address(), new AddressType(), new Carrier(), new Client(), new ContactInfo(), new ContactInfoType(), new Country(), new OwnCompany(), new OwnEmployee(), new NaturalPerson(), new JuristicPerson(), new Relationship(), new RelationshipType(), new ServiceProvider(), new Supplier() };
-
 	@Test
 	public void shouldVisitForEveryEntityOnce() {
 		//given
+		final Random rnd = new Random();
+		final int visitMethodCount = VisitorTestUtil.getVisitMethodCount(PartnerVisitor.class);
 		final TestVisitor sharedVisitor = new TestVisitor();
+		assertEquals(visitMethodCount, ENTITIES.length);
 
-		for (int i = 0; i < ENTITIES.length; i++) {
+		for (final Entity entity : ENTITIES) {
 			//given
+			final Integer input1 = rnd.nextInt();
+			final Integer input2 = rnd.nextInt();
 			final TestVisitor individualVisitor = new TestVisitor();
 
 			//when
-			final String result1 = ENTITIES[i].accept(sharedVisitor, i);
-			final String result2 = ENTITIES[i].accept(individualVisitor, i * i);
+			final String result1 = entity.accept(sharedVisitor, input1);
+			final String result2 = entity.accept(individualVisitor, input2);
 
 			//then
-			assertEquals(ENTITIES[i].toString(), 1, sharedVisitor.getCountFor(ENTITIES[i].getClass()));
-			assertEquals(ENTITIES[i].toString(), 1, individualVisitor.getCountFor(ENTITIES[i].getClass()));
-			assertEquals(ENTITIES[i].toString(), 1, individualVisitor.getEntityTypeCount());
-			assertEquals(ENTITIES[i].toString(), String.valueOf(i), result1);
-			assertEquals(ENTITIES[i].toString(), String.valueOf(i * i), result2);
+			assertEquals(entity.toString(), 1, sharedVisitor.getCountFor(entity.getClass()));
+			assertEquals(entity.toString(), 1, individualVisitor.getCountFor(entity.getClass()));
+			assertEquals(entity.toString(), 1, individualVisitor.getEntityTypeCount());
+			assertEquals(entity.toString(), input1.toString(), result1);
+			assertEquals(entity.toString(), input2.toString(), result2);
 		}
 
 		//then
-		assertEquals(EntityVisitorTest.getVisitMethodCount(PartnerVisitor.class), sharedVisitor.getEntityTypeCount());
+		assertEquals(visitMethodCount, sharedVisitor.getEntityTypeCount());
 	}
 
 }

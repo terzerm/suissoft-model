@@ -13,20 +13,13 @@ import com.suissoft.model.entity.product.Quote;
  * @param <R> type for result returned by visit method
  */
 public interface ProductVisitor<I, R> {
-	R visitOrder(Order order, I input);
-	R visitProduct(Product product, I input);
-	R visitProductCategory(ProductCategory productCategory, I input);
-	R visitQuote(Quote quote, I input);
-
-	interface Adapter<I, R> extends ProductVisitor<I, R> {
-		default R visitOrder(Order order, I input) {return null;}
-		default R visitProduct(Product product, I input) {return null;}
-		default R visitProductCategory(ProductCategory productCategory, I input) {return null;}
-		default R visitQuote(Quote quote, I input) {return null;}
-	}
-	class EntityVisitorAdapter<I, R> implements EntityVisitor.Adapter<I, R> {
+	default R visitOrder(Order order, I input) {return null;}
+	default R visitProduct(Product product, I input) {return null;}
+	default R visitProductCategory(ProductCategory productCategory, I input) {return null;}
+	default R visitQuote(Quote quote, I input) {return null;}
+	class Adapter<I, R> implements EntityVisitor<I, R> {
 		private final ProductVisitor<I, R> wrapped;
-		public EntityVisitorAdapter(ProductVisitor<I, R> wrapped) {
+		public Adapter(ProductVisitor<I, R> wrapped) {
 			this.wrapped = wrapped;
 		}
 		public R visitOrder(Order order, I input) {return wrapped.visitOrder(order, input);}

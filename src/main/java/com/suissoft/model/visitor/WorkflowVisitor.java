@@ -20,34 +20,20 @@ import com.suissoft.model.entity.workflow.Workflow;
  * @param <R> type for result returned by visit method
  */
 public interface WorkflowVisitor<I, R> {
-	R visitActivity(Activity activity, I input);
-	R visitAlternative(Alternative alternative, I input);
-	R visitCaseData(CaseData caseData, I input);
-	R visitEnd(End end, I input);
-	R visitFork(Fork fork, I input);
-	R visitJoin(Join join, I input);
-	R visitLayoutSpec(LayoutSpec layoutSpec, I input);
-	R visitMerge(Merge merge, I input);
-	R visitPartition(Partition partition, I input);
-	R visitStart(Start start, I input);
-	R visitWorkflow(Workflow workflow, I input);
-	
-	public interface Adapter<R, I> extends WorkflowVisitor<I, R> {
-		default R visitActivity(Activity activity, I input) {return null;}
-		default R visitAlternative(Alternative alternative, I input) {return null;}
-		default R visitCaseData(CaseData caseData, I input) {return null;}
-		default R visitEnd(End end, I input) {return null;}
-		default R visitFork(Fork fork, I input) {return null;}
-		default R visitJoin(Join join, I input) {return null;}
-		default R visitLayoutSpec(LayoutSpec layoutSpec, I input) {return null;}
-		default R visitMerge(Merge merge, I input) {return null;}
-		default R visitPartition(Partition partition, I input) {return null;}
-		default R visitStart(Start start, I input) {return null;}
-		default R visitWorkflow(Workflow workflow, I input) {return null;}
-	}
-	class EntityVisitorAdapter<I, R> implements EntityVisitor.Adapter<I, R> {
+	default R visitActivity(Activity activity, I input) {return null;}
+	default R visitAlternative(Alternative alternative, I input) {return null;}
+	default R visitCaseData(CaseData caseData, I input) {return null;}
+	default R visitEnd(End end, I input) {return null;}
+	default R visitFork(Fork fork, I input) {return null;}
+	default R visitJoin(Join join, I input) {return null;}
+	default R visitLayoutSpec(LayoutSpec layoutSpec, I input) {return null;}
+	default R visitMerge(Merge merge, I input) {return null;}
+	default R visitPartition(Partition partition, I input) {return null;}
+	default R visitStart(Start start, I input) {return null;}
+	default R visitWorkflow(Workflow workflow, I input) {return null;}
+	class Adapter<I, R> implements EntityVisitor<I, R> {
 		private final WorkflowVisitor<I, R> wrapped;
-		public EntityVisitorAdapter(WorkflowVisitor<I, R> wrapped) {
+		public Adapter(WorkflowVisitor<I, R> wrapped) {
 			this.wrapped = wrapped;
 		}
 		public R visitActivity(Activity activity, I input) {return wrapped.visitActivity(activity, input);}

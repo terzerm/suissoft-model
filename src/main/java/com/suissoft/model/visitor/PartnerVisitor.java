@@ -24,42 +24,24 @@ import com.suissoft.model.entity.partner.Supplier;
  * @param <R> type for result returned by visit method
  */
 public interface PartnerVisitor<I, R> {
-	R visitAddress(Address address, I input);
-	R visitAddressType(AddressType addressType, I input);
-	R visitCarrier(Carrier carrier, I input);
-	R visitClient(Client client, I input);
-	R visitContatInfo(ContactInfo contactInfo, I input);
-	R visitContactInfoType(ContactInfoType contactInfoType, I input);
-	R visitCountry(Country country, I input);
-	R visitJuristicPerson(JuristicPerson juristicPerson, I input);
-	R visitNaturalPerson(NaturalPerson naturalPerson, I input);
-	R visitOwnCompany(OwnCompany ownCompany, I input);
-	R visitOwnEmployee(OwnEmployee ownEmployee, I input);
-	R visitRelationship(Relationship relationship, I input);
-	R visitRelationshipType(RelationshipType relationshipType, I input);
-	R visitServiceProvider(ServiceProvider serviceProvider, I input);
-	R visitSupplier(Supplier supplier, I input);
-	
-	interface Adapter<I, R> extends PartnerVisitor<I, R> {
-		default R visitAddress(Address address, I input) {return null;}
-		default R visitAddressType(AddressType addressType, I input) {return null;}
-		default R visitCarrier(Carrier carrier, I input) {return null;}
-		default R visitClient(Client client, I input) {return null;}
-		default R visitContatInfo(ContactInfo contactInfo, I input) {return null;}
-		default R visitContactInfoType(ContactInfoType contactInfoType, I input) {return null;}
-		default R visitCountry(Country country, I input) {return null;}
-		default R visitJuristicPerson(JuristicPerson juristicPerson, I input) {return null;}
-		default R visitNaturalPerson(NaturalPerson naturalPerson, I input) {return null;}
-		default R visitOwnCompany(OwnCompany ownCompany, I input) {return null;}
-		default R visitOwnEmployee(OwnEmployee ownEmployee, I input) {return null;}
-		default R visitRelationship(Relationship relationship, I input) {return null;}
-		default R visitRelationshipType(RelationshipType relationshipType, I input) {return null;}
-		default R visitServiceProvider(ServiceProvider serviceProvider, I input) {return null;}
-		default R visitSupplier(Supplier supplier, I input) {return null;}
-	}
-	class EntityVisitorAdapter<I, R> implements EntityVisitor.Adapter<I, R> {
+	default R visitAddress(Address address, I input) {return null;}
+	default R visitAddressType(AddressType addressType, I input) {return null;}
+	default R visitCarrier(Carrier carrier, I input) {return null;}
+	default R visitClient(Client client, I input) {return null;}
+	default R visitContatInfo(ContactInfo contactInfo, I input) {return null;}
+	default R visitContactInfoType(ContactInfoType contactInfoType, I input) {return null;}
+	default R visitCountry(Country country, I input) {return null;}
+	default R visitJuristicPerson(JuristicPerson juristicPerson, I input) {return null;}
+	default R visitNaturalPerson(NaturalPerson naturalPerson, I input) {return null;}
+	default R visitOwnCompany(OwnCompany ownCompany, I input) {return null;}
+	default R visitOwnEmployee(OwnEmployee ownEmployee, I input) {return null;}
+	default R visitRelationship(Relationship relationship, I input) {return null;}
+	default R visitRelationshipType(RelationshipType relationshipType, I input) {return null;}
+	default R visitServiceProvider(ServiceProvider serviceProvider, I input) {return null;}
+	default R visitSupplier(Supplier supplier, I input) {return null;}
+	class Adapter<I, R> implements EntityVisitor<I, R> {
 		private final PartnerVisitor<I, R> wrapped;
-		public EntityVisitorAdapter(PartnerVisitor<I, R> wrapped) {
+		public Adapter(PartnerVisitor<I, R> wrapped) {
 			this.wrapped = wrapped;
 		}
 		public R visitAddress(Address address, I input) {return wrapped.visitAddress(address, input);}

@@ -46,7 +46,7 @@ public interface Entity {
 	 * @return the result returned by the visit method of the visitor
 	 */
 	default <I, R> R accept(PartnerVisitor<I, R> visitor, I input) {
-		return accept(visitor instanceof EntityVisitor ? (EntityVisitor<I, R>)visitor : new PartnerVisitor.EntityVisitorAdapter<I,R>(visitor), input);
+		return accept(visitor instanceof EntityVisitor ? (EntityVisitor<I, R>)visitor : new PartnerVisitor.Adapter<I,R>(visitor), input);
 	}
 	/**
 	 * Accept method for visitor calling back into visitor passing this entity
@@ -63,7 +63,7 @@ public interface Entity {
 	 * @return the result returned by the visit method of the visitor
 	 */
 	default <I, R> R accept(ProductVisitor<I, R> visitor, I input) {
-		return accept(visitor instanceof EntityVisitor ? (EntityVisitor<I, R>)visitor : new ProductVisitor.EntityVisitorAdapter<I,R>(visitor), input);
+		return accept(visitor instanceof EntityVisitor ? (EntityVisitor<I, R>)visitor : new ProductVisitor.Adapter<I,R>(visitor), input);
 	}
 	/**
 	 * Accept method for visitor calling back into visitor passing this entity
@@ -80,6 +80,6 @@ public interface Entity {
 	 * @return the result returned by the visit method of the visitor
 	 */
 	default <I, R> R accept(WorkflowVisitor<I, R> visitor, I input) {
-		return accept(visitor instanceof EntityVisitor ? (EntityVisitor<I, R>)visitor : new WorkflowVisitor.EntityVisitorAdapter<I,R>(visitor), input);
+		return accept(visitor instanceof EntityVisitor ? (EntityVisitor<I, R>)visitor : new WorkflowVisitor.Adapter<I,R>(visitor), input);
 	}
 }
