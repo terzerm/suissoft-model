@@ -2,18 +2,22 @@ package com.suissoft.model.entity.workflow;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 import com.suissoft.model.entity.AbstractEntity;
 import com.suissoft.model.visitor.EntityVisitor;
 
+@Entity
+@Table(name="T_LAYOUT_SPEC")
 public class LayoutSpec extends AbstractEntity {
 
-	private FlowElement owner;
+	private WorkflowNode owner;
 	private String value;
 	
 	@Id
@@ -25,11 +29,11 @@ public class LayoutSpec extends AbstractEntity {
 	
 	@ManyToOne(cascade=CascadeType.PERSIST, fetch=FetchType.EAGER, optional=false)
 	@JoinColumn(nullable=false, updatable=false, insertable=true)
-	public FlowElement getOwner() {
+	public WorkflowNode getOwner() {
 		return owner;
 	}
 
-	public void setOwner(FlowElement owner) {
+	public void setOwner(WorkflowNode owner) {
 		this.owner = owner;
 	}
 	

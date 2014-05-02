@@ -12,6 +12,7 @@ import com.suissoft.model.entity.workflow.Merge;
 import com.suissoft.model.entity.workflow.Partition;
 import com.suissoft.model.entity.workflow.Start;
 import com.suissoft.model.entity.workflow.Workflow;
+import com.suissoft.model.entity.workflow.WorkflowEdge;
 
 /**
  * Visitor for workflow {@link Entity}.
@@ -31,6 +32,7 @@ public interface WorkflowVisitor<I, R> {
 	default R visitPartition(Partition partition, I input) {return null;}
 	default R visitStart(Start start, I input) {return null;}
 	default R visitWorkflow(Workflow workflow, I input) {return null;}
+	default R visitWorkflowEdge(WorkflowEdge workflowEdge, I input) {return null;}
 	class Adapter<I, R> implements EntityVisitor<I, R> {
 		private final WorkflowVisitor<I, R> wrapped;
 		public Adapter(WorkflowVisitor<I, R> wrapped) {
@@ -47,5 +49,6 @@ public interface WorkflowVisitor<I, R> {
 		public R visitPartition(Partition partition, I input) {return wrapped.visitPartition(partition, input);}
 		public R visitStart(Start start, I input) {return wrapped.visitStart(start, input);}
 		public R visitWorkflow(Workflow workflow, I input) {return wrapped.visitWorkflow(workflow, input);}
+		public R visitWorkflowEdge(WorkflowEdge workflowEdge, I input) {return wrapped.visitWorkflowEdge(workflowEdge, input);}
 	}
 }

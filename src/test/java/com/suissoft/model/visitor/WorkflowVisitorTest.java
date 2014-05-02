@@ -23,10 +23,11 @@ import com.suissoft.model.entity.workflow.Merge;
 import com.suissoft.model.entity.workflow.Partition;
 import com.suissoft.model.entity.workflow.Start;
 import com.suissoft.model.entity.workflow.Workflow;
+import com.suissoft.model.entity.workflow.WorkflowEdge;
 
 public class WorkflowVisitorTest {
 
-	static final Entity[] ENTITIES = { new Activity(), new Alternative(), new CaseData(), new End(), new Fork(), new Join(), new LayoutSpec(), new Merge(), new Partition(), new Start(), new Workflow() };
+	static final Entity[] ENTITIES = { new Activity(), new Alternative(), new CaseData(), new End(), new Fork(), new Join(), new LayoutSpec(), new Merge(), new Partition(), new Start(), new Workflow(), new WorkflowEdge() };
 
 	private static class TestVisitor implements WorkflowVisitor<Integer, String> {
 
@@ -107,6 +108,9 @@ public class WorkflowVisitorTest {
 			return visit(workflow, input);
 		}
 
+		public String visitWorkflowEdge(WorkflowEdge workflowEdge, Integer input) {
+			return visit(workflowEdge, input);
+		}
 		
 	}
 

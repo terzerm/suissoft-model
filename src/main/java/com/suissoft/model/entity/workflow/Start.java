@@ -1,25 +1,27 @@
 package com.suissoft.model.entity.workflow;
 
-import javax.persistence.OneToOne;
+import java.util.Set;
 
 import com.suissoft.model.visitor.EntityVisitor;
 
 
-public class Start extends WorkflowElement implements Source {
+public class Start extends WorkflowNode implements SingleTargetNode {
 
-	private Target target;
-	
+	public int getSourceMaxCount() {
+		return 0;
+	}
 	@Override
-	@OneToOne
-	public Target getTarget() {
-		return target;
+	public void setSourceEdges(Set<WorkflowEdge> sourceEdges) {
+		if (sourceEdges != null && !sourceEdges.isEmpty()) {
+			throw new IllegalArgumentException(getClass().getSimpleName() + " has no source: " + sourceEdges);
+		}
+		super.setSourceEdges(sourceEdges);
+	}
+	@Override
+	public void addSource(WorkflowNode sourceNode) {
+		throw new IllegalArgumentException(getClass().getSimpleName() + " has no source: " + sourceNode);
 	}
 	
-	@Override
-	public void setTarget(Target target) {
-		this.target = target;
-	}
-
 	public <I, R> R accept(EntityVisitor<I, R> visitor, I input) {
 		return visitor.visitStart(this, input);
 	}
