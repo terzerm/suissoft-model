@@ -54,7 +54,7 @@ abstract public class WorkflowElement extends AbstractEntity {
 		this.description = description;
 	}
 	
-	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="owner", orphanRemoval=true)
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="element", orphanRemoval=true)
 	public List<LayoutSpec> getLayoutSpecs() {
 		return layoutSpecs;
 	}

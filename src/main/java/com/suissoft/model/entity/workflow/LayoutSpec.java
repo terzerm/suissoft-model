@@ -17,7 +17,7 @@ import com.suissoft.model.visitor.EntityVisitor;
 @Table(name="T_LAYOUT_SPEC")
 public class LayoutSpec extends AbstractEntity {
 
-	private WorkflowNode owner;
+	private WorkflowElement element;
 	private String value;
 	
 	@Id
@@ -27,14 +27,14 @@ public class LayoutSpec extends AbstractEntity {
 		return super.getId();
 	}
 	
-	@ManyToOne(cascade=CascadeType.PERSIST, fetch=FetchType.EAGER, optional=false)
+	@ManyToOne(cascade=CascadeType.PERSIST, fetch=FetchType.LAZY, optional=false)
 	@JoinColumn(nullable=false, updatable=false, insertable=true)
-	public WorkflowNode getOwner() {
-		return owner;
+	public WorkflowElement getElement() {
+		return element;
 	}
 
-	public void setOwner(WorkflowNode owner) {
-		this.owner = owner;
+	public void setElement(WorkflowElement element) {
+		this.element = element;
 	}
 	
 	@Column(length = 256, nullable=false)
